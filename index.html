@@ -377,9 +377,10 @@
   function generateQR(code) {
     const url = `https://bestonlineclipboard.com?code=${code}`;
     const canvas = document.getElementById('qr-canvas');
-    canvas.innerHTML = '';
     if (window.QRCode) {
-      new QRCode(canvas, { text: url, width: 120, height: 120, colorDark: '#6c63ff', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+      QRCode.toCanvas(canvas, url, { width: 120, color: { dark: '#6c63ff', light: '#ffffff' } }, function(err) {
+        if (err) console.error(err);
+      });
     }
   }
 
