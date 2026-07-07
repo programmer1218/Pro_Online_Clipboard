@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Online Clipboard — Copy. Share. Anywhere.</title>
-<meta name="description" content="Free online clipboard to share text, images and files between devices instantly. No signup needed — just a 6-digit code."/>
+<title>Online Clipboard — Copy. Share. Anywhere. Free Cross-Device Transfer</title>
+<meta name="description" content="Free online clipboard to instantly share text, images and files between any devices. No signup needed — just a 6-digit code. Works on all browsers and devices."/>
 <meta property="og:title" content="Online Clipboard — Copy. Share. Anywhere."/>
 <meta property="og:description" content="Share text, images and files between your devices in seconds. Just a 6-digit code — no account needed."/>
 <meta property="og:url" content="https://bestonlineclipboard.com"/>
@@ -13,121 +13,163 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Online Clipboard — Copy. Share. Anywhere."/>
 <meta name="twitter:description" content="Share text, images and files between your devices in seconds. Just a 6-digit code — no account needed."/>
+<link rel="canonical" href="https://bestonlineclipboard.com"/>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8440166327365432" crossorigin="anonymous"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-CVH00D1TDF');
-</script>
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2acc59b5032b4108a54c920550f67d75"}'></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CVH00D1TDF');</script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token":"2acc59b5032b4108a54c920550f67d75"}'></script>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon-180.png">
-<link rel="canonical" href="https://bestonlineclipboard.com"/>
+<script src="https://unpkg.com/qrcode-generator@1.4.4/qrcode.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #0a0a0f; --surface: #13131a; --surface2: #1c1c28;
-    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
-    --accent: #6c63ff; --accent2: #a78bfa; --text: #f0f0ff; --muted: #7c7c9a;
-    --success: #4ade80; --error: #f87171; --warn: #fbbf24;
-  }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(108,99,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(108,99,255,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
-  body::after { content: ''; position: fixed; top: -200px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(108,99,255,0.12) 0%, transparent 70%); pointer-events: none; z-index: 0; }
-  .wrap { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 0 20px 60px; }
-  header { display: flex; align-items: center; justify-content: space-between; padding: 28px 0 40px; }
-  .logo { display: flex; align-items: center; gap: 10px; }
-  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-  .logo-text { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
-  .logo-text span { color: var(--accent2); }
-  .badge { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3); color: var(--accent2); }
-  .hero { text-align: center; padding: 10px 0 44px; }
-  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(30px, 5vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 14px; }
-  .hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .hero p { color: var(--muted); font-size: 16px; font-weight: 300; max-width: 460px; margin: 0 auto; line-height: 1.6; }
-  .hero-credit { margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 30px; background: rgba(108,99,255,0.08); border: 1px solid rgba(108,99,255,0.2); }
-  .hero-credit-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: inline-block; animation: pulse 2s infinite; }
-  .hero-credit-text { font-family: 'Syne', sans-serif; font-size: 13px; color: var(--accent2); letter-spacing: 0.8px; font-weight: 600; }
-  .tabs { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 5px; margin-bottom: 24px; gap: 4px; }
-  .tab { flex: 1; padding: 10px; border-radius: 10px; border: none; background: transparent; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 7px; }
-  .tab svg { width: 16px; height: 16px; }
-  .tab.active { background: var(--surface2); color: var(--text); border: 1px solid var(--border2); }
-  .tab:hover:not(.active) { color: var(--text); }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px; margin-bottom: 20px; }
-  .card-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-  .card-title::before { content: ''; display: inline-block; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; }
-  textarea { width: 100%; min-height: 160px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 14px 16px; resize: vertical; outline: none; transition: border 0.2s; line-height: 1.6; }
-  textarea:focus { border-color: var(--accent); }
-  textarea::placeholder { color: var(--muted); }
-  .dropzone { border: 2px dashed var(--border2); border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--surface2); }
-  .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: rgba(108,99,255,0.05); }
-  .dropzone svg { width: 36px; height: 36px; color: var(--muted); margin-bottom: 10px; }
-  .dropzone p { color: var(--muted); font-size: 14px; }
-  .dropzone p span { color: var(--accent2); }
-  .dropzone input { display: none; }
-  .file-preview { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; margin-top: 12px; }
-  .file-preview svg { width: 20px; height: 20px; color: var(--accent2); flex-shrink: 0; }
-  .file-name { font-size: 14px; color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .file-size { font-size: 12px; color: var(--muted); }
-  .file-remove { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 18px; line-height: 1; padding: 0 4px; }
-  .file-remove:hover { color: var(--error); }
-  .img-preview { margin-top: 12px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
-  .img-preview img { width: 100%; max-height: 220px; object-fit: contain; background: var(--surface2); display: block; }
-  .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--accent), #8b5cf6); border: none; border-radius: 12px; color: #fff; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 16px; transition: opacity 0.2s, transform 0.1s; letter-spacing: 0.2px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn-primary:hover { opacity: 0.9; }
-  .btn-primary:active { transform: scale(0.99); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-  .code-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; text-align: center; margin-top: 16px; display: none; }
-  .code-box.show { display: block; }
-  .code-label { font-size: 12px; color: var(--muted); margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; }
-  .code-digits { display: flex; justify-content: center; gap: 10px; margin-bottom: 16px; }
-  .code-digit { width: 50px; height: 64px; background: var(--surface); border: 2px solid var(--accent); border-radius: 12px; font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--accent2); display: flex; align-items: center; justify-content: center; animation: popIn 0.3s ease backwards; }
-  .code-digit:nth-child(1){animation-delay:0.0s} .code-digit:nth-child(2){animation-delay:0.05s} .code-digit:nth-child(3){animation-delay:0.1s} .code-digit:nth-child(4){animation-delay:0.15s} .code-digit:nth-child(5){animation-delay:0.2s} .code-digit:nth-child(6){animation-delay:0.25s}
-  @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .code-copy { background: rgba(108,99,255,0.12); border: 1px solid rgba(108,99,255,0.25); color: var(--accent2); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 20px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-  .code-copy:hover { background: rgba(108,99,255,0.2); }
-  .code-expires { font-size: 12px; color: var(--muted); margin-top: 10px; }
-  .qr-box { margin-top: 14px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .qr-box canvas { border-radius: 10px; background: white; padding: 8px; }
-  .qr-label { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
-  .code-input-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; }
-  .code-input { width: 52px; height: 64px; background: var(--surface2); border: 2px solid var(--border2); border-radius: 12px; text-align: center; font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--text); outline: none; transition: border 0.15s; caret-color: var(--accent); }
-  .code-input:focus { border-color: var(--accent); }
-  .result-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-top: 16px; display: none; position: relative; }
-  .result-box.show { display: block; }
-  .result-text { font-size: 15px; line-height: 1.6; color: var(--text); white-space: pre-wrap; word-break: break-all; max-height: 260px; overflow-y: auto; }
-  .result-img img { width: 100%; border-radius: 8px; }
-  .result-file { display: flex; align-items: center; gap: 12px; padding: 10px; background: var(--surface); border-radius: 8px; }
-  .copy-result { position: absolute; top: 10px; right: 10px; background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.25); color: var(--accent2); font-size: 12px; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-  .copy-result:hover { background: rgba(108,99,255,0.25); }
-  .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface2); border: 1px solid var(--border2); color: var(--text); padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 500; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-  .toast.success { border-color: rgba(74,222,128,0.3); color: var(--success); }
-  .toast.error { border-color: rgba(248,113,113,0.3); color: var(--error); }
-  .status-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 20px; margin-top: 12px; }
-  .status-pill.loading { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.25); color: var(--warn); }
-  .status-pill.ok { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2); color: var(--success); }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-  .dot.pulse { animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 32px; }
-  @media(max-width:540px){ .features { grid-template-columns: 1fr; } }
-  .feature { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; text-align: center; }
-  .feature-icon { font-size: 26px; margin-bottom: 8px; }
-  .feature h3 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .feature p { font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .panel { display: none; } .panel.active { display: block; }
-  #fb-status { position: fixed; top: 16px; right: 20px; z-index: 100; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; transition: all 0.3s; }
-  .site-footer { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 12px; color: var(--muted); }
-  .site-footer a { color: var(--accent2); text-decoration: none; margin: 0 6px; }
-  .site-footer a:hover { text-decoration: underline; }
-  .confetti-piece { position: fixed; width: 10px; height: 10px; border-radius: 2px; top: -10px; animation: confettiFall linear forwards; z-index: 9999; pointer-events: none; }
-  @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* DARK THEME (default) */
+[data-theme="dark"] {
+  --bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c28;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.15);
+  --accent:#6c63ff;--accent2:#a78bfa;--text:#f0f0ff;--muted:#7c7c9a;
+  --success:#4ade80;--error:#f87171;--warn:#fbbf24;
+  --toggle-bg:#1c1c28;--faq-bg:#13131a;
+}
+/* LIGHT THEME */
+[data-theme="light"] {
+  --bg:#f8f8ff;--surface:#ffffff;--surface2:#f0f0ff;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.15);
+  --accent:#6c63ff;--accent2:#7c3aed;--text:#1a1a2e;--muted:#6b7280;
+  --success:#16a34a;--error:#dc2626;--warn:#d97706;
+  --toggle-bg:#e0e0f0;--faq-bg:#f0f0ff;
+}
+
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s}
+[data-theme="dark"] body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(108,99,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(108,99,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+[data-theme="dark"] body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(108,99,255,0.12) 0%,transparent 70%);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:0 20px 60px}
+header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 40px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-text{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.3px}
+.logo-text span{color:var(--accent2)}
+.header-right{display:flex;align-items:center;gap:10px}
+.badge{font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px;background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);color:var(--accent2)}
+.theme-toggle{background:var(--toggle-bg);border:1px solid var(--border2);border-radius:20px;padding:6px 12px;cursor:pointer;font-size:16px;transition:all 0.2s;display:flex;align-items:center;gap:6px;color:var(--text)}
+.theme-toggle:hover{opacity:0.8}
+.hero{text-align:center;padding:10px 0 44px}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(30px,5vw,48px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--muted);font-size:16px;font-weight:300;max-width:460px;margin:0 auto;line-height:1.6}
+.hero-credit{margin-top:20px;display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:30px;background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2)}
+.hero-credit-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);display:inline-block;animation:pulse 2s infinite}
+.hero-credit-text{font-family:'Syne',sans-serif;font-size:13px;color:var(--accent2);letter-spacing:0.8px;font-weight:600}
+.tabs{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:5px;margin-bottom:24px;gap:4px}
+.tab{flex:1;padding:10px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.tab svg{width:16px;height:16px}
+.tab.active{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}
+.tab:hover:not(.active){color:var(--text)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;margin-bottom:20px}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title::before{content:'';display:inline-block;width:3px;height:14px;background:var(--accent);border-radius:2px}
+textarea{width:100%;min-height:160px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:14px 16px;resize:vertical;outline:none;transition:border 0.2s;line-height:1.6}
+textarea:focus{border-color:var(--accent)}
+textarea::placeholder{color:var(--muted)}
+.dropzone{border:2px dashed var(--border2);border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--surface2)}
+.dropzone:hover,.dropzone.drag{border-color:var(--accent);background:rgba(108,99,255,0.05)}
+.dropzone svg{width:36px;height:36px;color:var(--muted);margin-bottom:10px}
+.dropzone p{color:var(--muted);font-size:14px}
+.dropzone p span{color:var(--accent2)}
+.dropzone input{display:none}
+.file-preview{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;margin-top:12px}
+.file-preview svg{width:20px;height:20px;color:var(--accent2);flex-shrink:0}
+.file-name{font-size:14px;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-size{font-size:12px;color:var(--muted)}
+.file-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:0 4px}
+.file-remove:hover{color:var(--error)}
+.img-preview{margin-top:12px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.img-preview img{width:100%;max-height:220px;object-fit:contain;background:var(--surface2);display:block}
+.btn-primary{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),#8b5cf6);border:none;border-radius:12px;color:#fff;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;cursor:pointer;margin-top:16px;transition:opacity 0.2s,transform 0.1s;letter-spacing:0.2px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:hover{opacity:0.9}
+.btn-primary:active{transform:scale(0.99)}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed}
+.code-box{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;margin-top:16px;display:none}
+.code-box.show{display:block}
+.code-label{font-size:12px;color:var(--muted);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase}
+.code-digits{display:flex;justify-content:center;gap:10px;margin-bottom:16px}
+.code-digit{width:50px;height:64px;background:var(--surface);border:2px solid var(--accent);border-radius:12px;font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--accent2);display:flex;align-items:center;justify-content:center;animation:popIn 0.3s ease backwards}
+.code-digit:nth-child(1){animation-delay:0.0s}.code-digit:nth-child(2){animation-delay:0.05s}.code-digit:nth-child(3){animation-delay:0.1s}.code-digit:nth-child(4){animation-delay:0.15s}.code-digit:nth-child(5){animation-delay:0.2s}.code-digit:nth-child(6){animation-delay:0.25s}
+@keyframes popIn{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+.code-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.code-copy{background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all 0.2s}
+.code-copy:hover{background:rgba(108,99,255,0.2)}
+.share-btn{background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);color:var(--success);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all 0.2s}
+.share-btn:hover{background:rgba(74,222,128,0.2)}
+.timer-box{font-size:12px;color:var(--muted);margin-top:4px}
+.timer-box span{color:var(--warn);font-weight:600}
+.qr-box{margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.qr-box div{border-radius:10px;background:white;padding:8px;display:inline-block}
+.qr-label{font-size:11px;color:var(--muted);letter-spacing:0.5px}
+.code-input-row{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
+.code-input{width:52px;height:64px;background:var(--surface2);border:2px solid var(--border2);border-radius:12px;text-align:center;font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--text);outline:none;transition:border 0.15s;caret-color:var(--accent)}
+.code-input:focus{border-color:var(--accent)}
+.result-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:16px;display:none;position:relative}
+.result-box.show{display:block}
+.result-text{font-size:15px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-all;max-height:260px;overflow-y:auto}
+.result-img img{width:100%;border-radius:8px}
+.result-file{display:flex;align-items:center;gap:12px;padding:10px;background:var(--surface);border-radius:8px}
+.copy-result{position:absolute;top:10px;right:10px;background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:12px;padding:5px 12px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.copy-result:hover{background:rgba(108,99,255,0.25)}
+/* History */
+.history-section{margin-top:20px}
+.history-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+.history-list{display:flex;flex-direction:column;gap:6px}
+.history-item{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px}
+.history-code{font-family:'Syne',sans-serif;font-weight:700;color:var(--accent2);letter-spacing:2px;font-size:15px}
+.history-time{color:var(--muted);font-size:11px}
+.history-copy{background:none;border:1px solid var(--border2);color:var(--muted);border-radius:6px;padding:3px 10px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif}
+.history-copy:hover{color:var(--text);border-color:var(--accent2)}
+/* Toast */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:12px 22px;border-radius:10px;font-size:14px;font-weight:500;transition:transform 0.3s ease;z-index:999;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(74,222,128,0.3);color:var(--success)}
+.toast.error{border-color:rgba(248,113,113,0.3);color:var(--error)}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;margin-top:12px}
+.status-pill.loading{background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.25);color:var(--warn)}
+.status-pill.ok{background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);color:var(--success)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.dot.pulse{animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+@media(max-width:540px){.features{grid-template-columns:1fr}}
+.feature{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.feature-icon{font-size:26px;margin-bottom:8px}
+.feature h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px}
+.feature p{font-size:12px;color:var(--muted);line-height:1.5}
+/* FAQ */
+.faq-section{margin-top:48px}
+.faq-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:20px;letter-spacing:-0.5px}
+.faq-item{background:var(--faq-bg);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:16px 20px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q:hover{color:var(--accent2)}
+.faq-q .faq-icon{color:var(--accent2);font-size:20px;flex-shrink:0;transition:transform 0.2s}
+.faq-q.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease;padding:0 20px;font-size:14px;color:var(--muted);line-height:1.7}
+.faq-a.open{max-height:200px;padding:0 20px 16px}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.panel{display:none}.panel.active{display:block}
+#fb-status{position:fixed;top:16px;right:20px;z-index:100;font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px;transition:all 0.3s}
+.site-footer{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted)}
+.site-footer a{color:var(--accent2);text-decoration:none;margin:0 6px}
+.site-footer a:hover{text-decoration:underline}
+.confetti-piece{position:fixed;width:10px;height:10px;border-radius:2px;top:-10px;animation:confettiFall linear forwards;z-index:9999;pointer-events:none}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;cursor:pointer;transition:border-color 0.2s}
+.faq-item:hover{border-color:var(--accent)}
+.faq-q{padding:16px 20px;font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--text);display:flex;justify-content:space-between;align-items:center}
+.faq-arrow{color:var(--accent2);font-size:18px;transition:transform 0.2s}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{display:none;padding:14px 20px 16px;font-size:14px;color:var(--muted);line-height:1.7;border-top:1px solid var(--border)}
+.faq-item.open .faq-a{display:block}
 </style>
 </head>
 <body>
@@ -142,7 +184,10 @@
       <div class="logo-icon">📋</div>
       <div class="logo-text">clip<span>board</span></div>
     </div>
-    <span class="badge">Free · No signup</span>
+    <div class="header-right">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+      <span class="badge">Free · No signup</span>
+    </div>
   </header>
 
   <div class="hero">
@@ -219,12 +264,20 @@
     <div class="code-box" id="code-box">
       <div class="code-label">Your 6-digit retrieval code</div>
       <div class="code-digits" id="code-digits"></div>
-      <button class="code-copy" onclick="copyCode()">Copy Code</button>
-      <div class="code-expires">⏱ Expires in 24 hours</div>
+      <div class="code-actions">
+        <button class="code-copy" onclick="copyCode()">📋 Copy Code</button>
+        <button class="share-btn" onclick="shareCode()">🔗 Share</button>
+      </div>
+      <div class="timer-box">⏱ Expires in <span id="timer-display">24:00:00</span></div>
       <div class="qr-box" id="qr-box">
         <div class="qr-label">SCAN TO RETRIEVE</div>
-        <canvas id="qr-canvas"></canvas>
+        <div id="qr-canvas"></div>
       </div>
+    </div>
+
+    <div class="history-section" id="history-section" style="display:none;">
+      <div class="history-title">Recent Codes</div>
+      <div class="history-list" id="history-list"></div>
     </div>
   </div>
 
@@ -255,30 +308,126 @@
     <div class="feature"><div class="feature-icon">📱</div><h3>Cross-device</h3><p>Phone to laptop, Mac to Windows — just enter the 6-digit code.</p></div>
   </div>
 
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <div class="faq-title">Frequently Asked Questions</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How does Online Clipboard work?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Your content is temporarily stored on our servers and linked to a unique 6-digit code. Enter that code on any other device to retrieve it instantly. Everything is deleted automatically after 24 hours.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is it free to use?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes, completely free. No account, no subscription, no hidden charges. The service is supported by non-intrusive advertising.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How long does my content stay available?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">All content is automatically and permanently deleted after 24 hours. You can see a countdown timer when you send something. There is no way to extend the expiry — just resend if needed.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What file types and sizes are supported?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Any file type up to 5 MB is supported. For images, PNG, JPG, GIF, and WebP are accepted. Text transfers have no practical size limit.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is my data private and secure?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">All transfers are encrypted in transit. We do not require any personal information, and we do not log the content of your transfers. Data is permanently erased after 24 hours and never associated with any identity.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Does it work on all devices and browsers?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes. Online Clipboard works on any device with a modern browser — Chrome, Firefox, Safari, Edge — on phones, tablets, laptops, and desktops running iOS, Android, Windows, macOS, or Linux.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What happens if I enter the wrong code?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">You will see a "Code not found or expired" message. Double-check the 6 digits and try again. If the code has expired (after 24 hours), the original sender will need to resend the content.</div>
+    </div>
+  </div>
+
+  <!-- FAQ SECTION -->
+  <div style="margin-top:48px;">
+    <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;text-align:center;margin-bottom:24px;letter-spacing:-0.5px;">Frequently Asked <span style="background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Questions</span></div>
+    <div id="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Is Online Clipboard free to use? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">Yes, completely free. No signup, no payment, no premium tier. All features are available to everyone at no cost.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How long does my content stay available? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">All content is automatically deleted after 24 hours. Make sure to retrieve your content within that window.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What file types and sizes are supported? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">Any file type up to 5 MB. For images, PNG, JPG, GIF and WebP are supported. For text, there is no practical character limit.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Is my data secure? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">All content is encrypted in transit. We do not require personal information and content is permanently deleted after 24 hours.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Do I need to create an account? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">No account needed. Just open the site, paste or upload your content, and share the 6-digit code. No registration required.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Can multiple people retrieve the same code? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">Yes, anyone with the 6-digit code can retrieve the content within 24 hours — great for sharing with a group.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What devices and browsers are supported? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">All modern browsers — Chrome, Firefox, Safari, Edge — on phones, tablets, laptops and desktops. No plugins required.</div>
+      </div>
+    </div>
+  </div>
+
   <div class="site-footer">
     &copy; 2026 Online Clipboard &nbsp;|&nbsp;
     <a href="about.html">About</a> &nbsp;|&nbsp;
     <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp;
-    <a href="how-to-use.html">How to Use</a>
+    <a href="how-to-use.html">How to Use</a> &nbsp;|&nbsp;
+    <a href="tips.html">Tips</a> &nbsp;|&nbsp;
+    <a href="use-cases.html">Use Cases</a>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, doc, setDoc, getDoc, deleteDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyAqLhZyuDLj3NRylACyHNu7tmTKeZ-GQDA",
-    authDomain: "online-clipboard-e1aa1.firebaseapp.com",
-    projectId: "online-clipboard-e1aa1",
-    storageBucket: "online-clipboard-e1aa1.firebasestorage.app",
-    messagingSenderId: "451635613391",
-    appId: "1:451635613391:web:1366efd39bbb819b5b71ba",
-    measurementId: "G-CVH00D1TDF"
+    apiKey:"AIzaSyAqLhZyuDLj3NRylACyHNu7tmTKeZ-GQDA",
+    authDomain:"online-clipboard-e1aa1.firebaseapp.com",
+    projectId:"online-clipboard-e1aa1",
+    storageBucket:"online-clipboard-e1aa1.firebasestorage.app",
+    messagingSenderId:"451635613391",
+    appId:"1:451635613391:web:1366efd39bbb819b5b71ba",
+    measurementId:"G-CVH00D1TDF"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -287,47 +436,71 @@
   const fbStatus = document.getElementById('fb-status');
   fbStatus.className = 'status-pill ok';
   fbStatus.innerHTML = '<span class="dot"></span> Connected';
-  setTimeout(() => { fbStatus.style.opacity = '0'; setTimeout(() => fbStatus.remove(), 400); }, 3000);
+  setTimeout(() => { fbStatus.style.opacity='0'; setTimeout(()=>fbStatus.remove(),400); }, 3000);
 
-  let currentType = 'text', selectedFile = null, selectedImageData = null, lastCode = '', lastResultData = null;
+  let currentType='text', selectedFile=null, selectedImageData=null, lastCode='', lastResultData=null, timerInterval=null;
+  let codeHistory = JSON.parse(localStorage.getItem('clipHistory')||'[]');
+
+  // Theme
+  window.toggleTheme = function() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-btn').textContent = isDark ? '☀️ Light' : '🌙 Dark';
+    localStorage.setItem('clipTheme', isDark ? 'light' : 'dark');
+  };
+  const savedTheme = localStorage.getItem('clipTheme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('theme-btn').textContent = savedTheme === 'dark' ? '🌙 Dark' : '☀️ Light';
+
+  // FAQ
+  window.toggleFaq = function(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.faq-a.open').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-q.open').forEach(q => q.classList.remove('open'));
+    if (!isOpen) { answer.classList.add('open'); btn.classList.add('open'); }
+  };
 
   window.switchTab = switchTab; window.switchType = switchType; window.pasteClipboard = pasteClipboard;
   window.handleImageFile = handleImageFile; window.handleFileSelect = handleFileSelect; window.clearFile = clearFile;
-  window.sendContent = sendContent; window.copyCode = copyCode; window.moveNext = moveNext; window.movePrev = movePrev;
-  window.retrieveContent = retrieveContent; window.copyResult = copyResult; window.downloadImage = downloadImage; window.downloadFile = downloadFile;
+  window.sendContent = sendContent; window.copyCode = copyCode; window.shareCode = shareCode;
+  window.moveNext = moveNext; window.movePrev = movePrev;
+  window.retrieveContent = retrieveContent; window.copyResult = copyResult;
+  window.downloadImage = downloadImage; window.downloadFile = downloadFile;
 
   function switchTab(tab, el) {
-    document.querySelectorAll('#panel-send, #panel-retrieve').forEach(p => p.classList.remove('active'));
-    document.getElementById('panel-' + tab).classList.add('active');
-    document.querySelectorAll('.tabs')[0].querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('#panel-send,#panel-retrieve').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+tab).classList.add('active');
+    document.querySelectorAll('.tabs')[0].querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     el.classList.add('active');
   }
 
   function switchType(type, el) {
-    currentType = type;
-    document.querySelectorAll('.tabs')[1].querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    currentType=type;
+    document.querySelectorAll('.tabs')[1].querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     el.classList.add('active');
-    document.getElementById('send-text-area').style.display = type==='text' ? 'block' : 'none';
-    document.getElementById('send-image-area').style.display = type==='image' ? 'block' : 'none';
-    document.getElementById('send-file-area').style.display = type==='file' ? 'block' : 'none';
+    document.getElementById('send-text-area').style.display=type==='text'?'block':'none';
+    document.getElementById('send-image-area').style.display=type==='image'?'block':'none';
+    document.getElementById('send-file-area').style.display=type==='file'?'block':'none';
     document.getElementById('code-box').classList.remove('show');
   }
 
   document.getElementById('text-input').addEventListener('input', function() {
-    document.getElementById('char-count').textContent = this.value.length.toLocaleString() + ' characters';
+    document.getElementById('char-count').textContent = this.value.length.toLocaleString()+' characters';
   });
 
   async function pasteClipboard() {
     try {
       const text = await navigator.clipboard.readText();
       document.getElementById('text-input').value = text;
-      document.getElementById('char-count').textContent = text.length.toLocaleString() + ' characters';
-    } catch(e) { showToast('Paste manually — browser blocked auto-paste', 'error'); }
+      document.getElementById('char-count').textContent = text.length.toLocaleString()+' characters';
+    } catch(e) { showToast('Paste manually — browser blocked auto-paste','error'); }
   }
 
   function handleImageFile(file) {
-    if (!file) return;
-    if (!file.type.startsWith('image/')) { showToast('Please select an image file', 'error'); return; }
+    if(!file) return;
+    if(!file.type.startsWith('image/')){ showToast('Please select an image file','error'); return; }
     const reader = new FileReader();
     reader.onload = e => {
       selectedImageData = e.target.result;
@@ -338,139 +511,185 @@
   }
 
   const imgDrop = document.getElementById('img-drop');
-  imgDrop.addEventListener('dragover', e => { e.preventDefault(); imgDrop.classList.add('drag'); });
-  imgDrop.addEventListener('dragleave', () => imgDrop.classList.remove('drag'));
-  imgDrop.addEventListener('drop', e => { e.preventDefault(); imgDrop.classList.remove('drag'); handleImageFile(e.dataTransfer.files[0]); });
+  imgDrop.addEventListener('dragover', e=>{e.preventDefault();imgDrop.classList.add('drag')});
+  imgDrop.addEventListener('dragleave', ()=>imgDrop.classList.remove('drag'));
+  imgDrop.addEventListener('drop', e=>{e.preventDefault();imgDrop.classList.remove('drag');handleImageFile(e.dataTransfer.files[0])});
 
   function handleFileSelect(file) {
-    if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { showToast('File must be under 5 MB', 'error'); return; }
-    selectedFile = file;
-    document.getElementById('sel-file-name').textContent = file.name;
-    document.getElementById('sel-file-size').textContent = formatBytes(file.size);
-    document.getElementById('file-preview-box').style.display = 'flex';
+    if(!file) return;
+    if(file.size>5*1024*1024){ showToast('File must be under 5 MB','error'); return; }
+    selectedFile=file;
+    document.getElementById('sel-file-name').textContent=file.name;
+    document.getElementById('sel-file-size').textContent=formatBytes(file.size);
+    document.getElementById('file-preview-box').style.display='flex';
   }
-  function clearFile() { selectedFile = null; document.getElementById('file-input').value = ''; document.getElementById('file-preview-box').style.display = 'none'; }
+  function clearFile(){ selectedFile=null; document.getElementById('file-input').value=''; document.getElementById('file-preview-box').style.display='none'; }
 
   const fileDrop = document.getElementById('file-drop');
-  fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('drag'); });
-  fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('drag'));
-  fileDrop.addEventListener('drop', e => { e.preventDefault(); fileDrop.classList.remove('drag'); handleFileSelect(e.dataTransfer.files[0]); });
+  fileDrop.addEventListener('dragover', e=>{e.preventDefault();fileDrop.classList.add('drag')});
+  fileDrop.addEventListener('dragleave', ()=>fileDrop.classList.remove('drag'));
+  fileDrop.addEventListener('drop', e=>{e.preventDefault();fileDrop.classList.remove('drag');handleFileSelect(e.dataTransfer.files[0])});
 
-  function genCode() { return String(Math.floor(100000 + Math.random() * 900000)); }
+  function genCode(){ return String(Math.floor(100000+Math.random()*900000)); }
 
   function launchConfetti() {
-    const colors = ['#6c63ff','#a78bfa','#4ade80','#f87171','#fbbf24','#60a5fa'];
-    for (let i = 0; i < 60; i++) {
-      const el = document.createElement('div');
-      el.className = 'confetti-piece';
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.background = colors[Math.floor(Math.random() * colors.length)];
-      el.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
-      el.style.animationDelay = Math.random() * 0.5 + 's';
-      el.style.width = el.style.height = (Math.random() * 8 + 6) + 'px';
+    const colors=['#6c63ff','#a78bfa','#4ade80','#f87171','#fbbf24','#60a5fa'];
+    for(let i=0;i<60;i++){
+      const el=document.createElement('div'); el.className='confetti-piece';
+      el.style.left=Math.random()*100+'vw';
+      el.style.background=colors[Math.floor(Math.random()*colors.length)];
+      el.style.animationDuration=(Math.random()*2+1.5)+'s';
+      el.style.animationDelay=Math.random()*0.5+'s';
+      el.style.width=el.style.height=(Math.random()*8+6)+'px';
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 3500);
+      setTimeout(()=>el.remove(),3500);
     }
   }
 
   function generateQR(code) {
     const url = `https://bestonlineclipboard.com?code=${code}`;
-    const canvas = document.getElementById('qr-canvas');
-    if (window.QRCode) {
-      QRCode.toCanvas(canvas, url, { width: 120, color: { dark: '#6c63ff', light: '#ffffff' } }, function(err) {
-        if (err) console.error(err);
-      });
-    }
+    const container = document.getElementById('qr-canvas');
+    container.innerHTML = '';
+    try {
+      const qr = qrcode(0,'M');
+      qr.addData(url);
+      qr.make();
+      container.innerHTML = qr.createImgTag(4,8);
+    } catch(e) { console.error('QR error',e); }
   }
+
+  function startTimer(expiresAt) {
+    if(timerInterval) clearInterval(timerInterval);
+    function update() {
+      const remaining = expiresAt - Date.now();
+      if(remaining <= 0) { document.getElementById('timer-display').textContent='Expired'; clearInterval(timerInterval); return; }
+      const h = Math.floor(remaining/3600000);
+      const m = Math.floor((remaining%3600000)/60000);
+      const s = Math.floor((remaining%60000)/1000);
+      document.getElementById('timer-display').textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+    update();
+    timerInterval = setInterval(update, 1000);
+  }
+
+  function addToHistory(code) {
+    codeHistory.unshift({ code, time: Date.now() });
+    if(codeHistory.length > 5) codeHistory = codeHistory.slice(0,5);
+    localStorage.setItem('clipHistory', JSON.stringify(codeHistory));
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const list = document.getElementById('history-list');
+    const section = document.getElementById('history-section');
+    if(codeHistory.length === 0){ section.style.display='none'; return; }
+    section.style.display='block';
+    list.innerHTML = codeHistory.map(item => {
+      const ago = Math.floor((Date.now()-item.time)/60000);
+      const agoText = ago < 1 ? 'just now' : ago < 60 ? `${ago}m ago` : `${Math.floor(ago/60)}h ago`;
+      return `<div class="history-item">
+        <span class="history-code">${item.code}</span>
+        <span class="history-time">${agoText}</span>
+        <button class="history-copy" onclick="navigator.clipboard.writeText('${item.code}').then(()=>showToast('Code copied!','success'))">Copy</button>
+      </div>`;
+    }).join('');
+  }
+  renderHistory();
 
   async function sendContent() {
     const btn = document.getElementById('send-btn');
     let payload = null;
-    if (currentType === 'text') {
+    if(currentType==='text'){
       const txt = document.getElementById('text-input').value.trim();
-      if (!txt) { showToast('Please enter some text to send', 'error'); return; }
-      payload = { type: 'text', data: txt };
-    } else if (currentType === 'image') {
-      if (!selectedImageData) { showToast('Please select an image', 'error'); return; }
-      payload = { type: 'image', data: selectedImageData };
-    } else if (currentType === 'file') {
-      if (!selectedFile) { showToast('Please select a file', 'error'); return; }
+      if(!txt){ showToast('Please enter some text to send','error'); return; }
+      payload={type:'text',data:txt};
+    } else if(currentType==='image'){
+      if(!selectedImageData){ showToast('Please select an image','error'); return; }
+      payload={type:'image',data:selectedImageData};
+    } else if(currentType==='file'){
+      if(!selectedFile){ showToast('Please select a file','error'); return; }
       const b64 = await fileToBase64(selectedFile);
-      payload = { type: 'file', data: b64, name: selectedFile.name, size: selectedFile.size, mime: selectedFile.type };
+      payload={type:'file',data:b64,name:selectedFile.name,size:selectedFile.size,mime:selectedFile.type};
     }
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> Sending...';
+    btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Sending...';
     try {
       const code = genCode();
-      const expiresAt = Timestamp.fromMillis(Date.now() + 24 * 60 * 60 * 1000);
-      await setDoc(doc(db, 'clips', code), { payload, createdAt: Timestamp.now(), expiresAt });
-      lastCode = code;
+      const expiresAt = Timestamp.fromMillis(Date.now()+24*60*60*1000);
+      await setDoc(doc(db,'clips',code),{payload,createdAt:Timestamp.now(),expiresAt});
+      lastCode=code;
       const digits = document.getElementById('code-digits');
-      digits.innerHTML = '';
-      code.split('').forEach(d => { const el = document.createElement('div'); el.className = 'code-digit'; el.textContent = d; digits.appendChild(el); });
+      digits.innerHTML='';
+      code.split('').forEach(d=>{const el=document.createElement('div');el.className='code-digit';el.textContent=d;digits.appendChild(el)});
       document.getElementById('code-box').classList.add('show');
       generateQR(code);
+      startTimer(Date.now()+24*60*60*1000);
+      addToHistory(code);
       launchConfetti();
-      showToast('Sent! Share the 6-digit code.', 'success');
-    } catch (err) { console.error(err); showToast('Failed to send. Check your connection.', 'error'); }
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Send';
+      showToast('Sent! Share the 6-digit code.','success');
+    } catch(err){ console.error(err); showToast('Failed to send. Check your connection.','error'); }
+    btn.disabled=false; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Send';
   }
 
-  function copyCode() { navigator.clipboard.writeText(lastCode).then(() => showToast('Code copied!', 'success')); }
+  function copyCode(){ navigator.clipboard.writeText(lastCode).then(()=>showToast('Code copied!','success')); }
+
+  function shareCode() {
+    const url = `https://bestonlineclipboard.com?code=${lastCode}`;
+    if(navigator.share){ navigator.share({title:'Online Clipboard',text:`Retrieve your content with code: ${lastCode}`,url}); }
+    else { navigator.clipboard.writeText(url).then(()=>showToast('Link copied to clipboard!','success')); }
+  }
 
   const codeInputs = document.querySelectorAll('.code-input');
-  function moveNext(el, idx) {
-    el.value = el.value.replace(/[^0-9]/g, '');
-    if (el.value && idx < 5) codeInputs[idx + 1].focus();
-    if (idx === 5 && el.value) {
-      const allFilled = Array.from(codeInputs).every(i => i.value.length === 1);
-      if (allFilled) setTimeout(() => retrieveContent(), 300);
-    }
+  function moveNext(el,idx){
+    el.value=el.value.replace(/[^0-9]/g,'');
+    if(el.value&&idx<5) codeInputs[idx+1].focus();
+    if(idx===5&&el.value){ const all=Array.from(codeInputs).every(i=>i.value.length===1); if(all) setTimeout(()=>retrieveContent(),300); }
   }
-  function movePrev(e, idx) { if (e.key === 'Backspace' && !codeInputs[idx].value && idx > 0) { codeInputs[idx - 1].focus(); codeInputs[idx - 1].value = ''; } }
+  function movePrev(e,idx){ if(e.key==='Backspace'&&!codeInputs[idx].value&&idx>0){codeInputs[idx-1].focus();codeInputs[idx-1].value='';} }
 
   async function retrieveContent() {
-    const code = Array.from(codeInputs).map(i => i.value).join('');
-    if (code.length < 6) { showToast('Enter the full 6-digit code', 'error'); return; }
-    const btn = document.getElementById('retrieve-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> Retrieving...';
+    const code=Array.from(codeInputs).map(i=>i.value).join('');
+    if(code.length<6){showToast('Enter the full 6-digit code','error');return;}
+    const btn=document.getElementById('retrieve-btn');
+    btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Retrieving...';
     try {
-      const snap = await getDoc(doc(db, 'clips', code));
-      if (!snap.exists()) { showToast('Code not found or expired', 'error'); btn.disabled = false; btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve'; return; }
-      const { payload, expiresAt } = snap.data();
-      if (expiresAt && expiresAt.toMillis() < Date.now()) { await deleteDoc(doc(db, 'clips', code)); showToast('Code not found or expired', 'error'); btn.disabled = false; btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve'; return; }
-      lastResultData = payload;
-      const resultBox = document.getElementById('result-box');
-      const resultContent = document.getElementById('result-content');
-      const copyBtn = document.getElementById('copy-result-btn');
+      const snap=await getDoc(doc(db,'clips',code));
+      if(!snap.exists()){showToast('Code not found or expired','error');btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve';return;}
+      const{payload,expiresAt}=snap.data();
+      if(expiresAt&&expiresAt.toMillis()<Date.now()){await deleteDoc(doc(db,'clips',code));showToast('Code not found or expired','error');btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve';return;}
+      lastResultData=payload;
+      const resultBox=document.getElementById('result-box');
+      const resultContent=document.getElementById('result-content');
+      const copyBtn=document.getElementById('copy-result-btn');
       resultBox.classList.add('show');
-      if (payload.type === 'text') {
-        resultContent.innerHTML = `<div class="result-text">${escHtml(payload.data)}</div>`;
-        copyBtn.style.display = 'block';
-      } else if (payload.type === 'image') {
-        resultContent.innerHTML = `<div class="result-img"><img src="${payload.data}" alt="shared image"/></div>`;
-        copyBtn.style.display = 'none';
-        resultContent.innerHTML += `<button onclick="downloadImage('${payload.data}')" style="margin-top:10px;background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 18px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download Image</button>`;
-      } else if (payload.type === 'file') {
-        resultContent.innerHTML = `<div class="result-file"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div style="flex:1"><div style="font-size:14px;font-weight:500;">${escHtml(payload.name)}</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">${formatBytes(payload.size)}</div></div><button onclick="downloadFile()" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download</button></div>`;
-        copyBtn.style.display = 'none';
+      if(payload.type==='text'){
+        resultContent.innerHTML=`<div class="result-text">${escHtml(payload.data)}</div>`;
+        copyBtn.style.display='block';
+      } else if(payload.type==='image'){
+        resultContent.innerHTML=`<div class="result-img"><img src="${payload.data}" alt="shared image"/></div>`;
+        copyBtn.style.display='none';
+        resultContent.innerHTML+=`<button onclick="downloadImage('${payload.data}')" style="margin-top:10px;background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 18px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download Image</button>`;
+      } else if(payload.type==='file'){
+        resultContent.innerHTML=`<div class="result-file"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div style="flex:1"><div style="font-size:14px;font-weight:500;">${escHtml(payload.name)}</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">${formatBytes(payload.size)}</div></div><button onclick="downloadFile()" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download</button></div>`;
+        copyBtn.style.display='none';
       }
-      showToast('Content retrieved!', 'success');
-    } catch (err) { console.error(err); showToast('Failed to retrieve. Check your connection.', 'error'); }
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve';
+      showToast('Content retrieved!','success');
+    } catch(err){console.error(err);showToast('Failed to retrieve. Check your connection.','error');}
+    btn.disabled=false; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve';
   }
 
-  function copyResult() { if (lastResultData && lastResultData.type === 'text') { navigator.clipboard.writeText(lastResultData.data).then(() => showToast('Copied to clipboard!', 'success')); } }
-  function downloadImage(src) { const a = document.createElement('a'); a.href = src; a.download = 'shared-image.png'; a.click(); }
-  function downloadFile() { if (!lastResultData) return; const a = document.createElement('a'); a.href = lastResultData.data; a.download = lastResultData.name; a.click(); }
-  function showToast(msg, type = '') { const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast show' + (type ? ' ' + type : ''); setTimeout(() => { t.className = 'toast'; }, 3000); }
-  function formatBytes(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b/1024).toFixed(1) + ' KB'; return (b/1048576).toFixed(1) + ' MB'; }
-  function fileToBase64(file) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); }); }
-  function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function copyResult(){ if(lastResultData&&lastResultData.type==='text'){navigator.clipboard.writeText(lastResultData.data).then(()=>showToast('Copied to clipboard!','success'));} }
+  function downloadImage(src){const a=document.createElement('a');a.href=src;a.download='shared-image.png';a.click();}
+  function downloadFile(){if(!lastResultData)return;const a=document.createElement('a');a.href=lastResultData.data;a.download=lastResultData.name;a.click();}
+  function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');setTimeout(()=>{t.className='toast';},3000);}
+  function formatBytes(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
+  function fileToBase64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});}
+  function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  // Expose showToast globally for history
+  window.showToast = showToast;
+
+  // FAQ toggle
+  window.toggleFaq = function(el) { el.classList.toggle('open'); }
 </script>
 </body>
 </html>
