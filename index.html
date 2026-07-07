@@ -14,6 +14,32 @@
 <meta name="twitter:title" content="Online Clipboard — Copy. Share. Anywhere."/>
 <meta name="twitter:description" content="Share text, images and files between your devices in seconds. Just a 6-digit code — no account needed."/>
 <link rel="canonical" href="https://bestonlineclipboard.com"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Online Clipboard",
+  "url": "https://bestonlineclipboard.com",
+  "description": "Free online clipboard to instantly share text, images and files between any devices using a 6-digit code. No signup needed.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How does Online Clipboard work?", "acceptedAnswer": { "@type": "Answer", "text": "Your content is temporarily stored on our servers and linked to a unique 6-digit code. Enter that code on any other device to retrieve it instantly. Everything is deleted automatically after 24 hours." } },
+    { "@type": "Question", "name": "Is Online Clipboard free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No signup, no payment, no premium tier. All features are available to everyone at no cost, supported by non-intrusive advertising." } },
+    { "@type": "Question", "name": "How long does my content stay available?", "acceptedAnswer": { "@type": "Answer", "text": "All content is automatically and permanently deleted after 24 hours. A countdown timer shows exactly when your code expires." } },
+    { "@type": "Question", "name": "What file types and sizes are supported?", "acceptedAnswer": { "@type": "Answer", "text": "Any file type up to 5 MB. For images, PNG, JPG, GIF and WebP are supported at full quality. For text, there is no practical character limit." } },
+    { "@type": "Question", "name": "Is my data private and secure?", "acceptedAnswer": { "@type": "Answer", "text": "All transfers are encrypted in transit. We do not require personal information or log the content of your transfers, and everything is permanently erased after 24 hours." } },
+    { "@type": "Question", "name": "Do I need to create an account?", "acceptedAnswer": { "@type": "Answer", "text": "No account needed. Just open the site, paste or upload your content, and share the 6-digit code." } }
+  ]
+}
+</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8440166327365432" crossorigin="anonymous"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CVH00D1TDF');</script>
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token":"2acc59b5032b4108a54c920550f67d75"}'></script>
@@ -170,6 +196,17 @@ textarea::placeholder{color:var(--muted)}
 .faq-item.open .faq-arrow{transform:rotate(180deg)}
 .faq-a{display:none;padding:14px 20px 16px;font-size:14px;color:var(--muted);line-height:1.7;border-top:1px solid var(--border)}
 .faq-item.open .faq-a{display:block}
+.info-section{margin-top:48px}
+.info-section h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:12px;letter-spacing:-0.3px}
+.info-section p{color:var(--muted);font-size:15px;line-height:1.75;margin-bottom:16px}
+.info-section ul{padding-left:20px;color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:16px}
+.info-section a{color:var(--accent2);text-decoration:none}
+.info-section a:hover{text-decoration:underline}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+@media(max-width:540px){.info-grid{grid-template-columns:1fr}}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.info-card h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px}
+.info-card p{font-size:13px;margin-bottom:0}
 </style>
 </head>
 <body>
@@ -308,64 +345,25 @@ textarea::placeholder{color:var(--muted)}
     <div class="feature"><div class="feature-icon">📱</div><h3>Cross-device</h3><p>Phone to laptop, Mac to Windows — just enter the 6-digit code.</p></div>
   </div>
 
-  <!-- FAQ Section -->
-  <div class="faq-section">
-    <div class="faq-title">Frequently Asked Questions</div>
+  <!-- CONTENT SECTION -->
+  <div class="info-section">
+    <h2>What Is Online Clipboard?</h2>
+    <p>Online Clipboard is a free web-based tool that acts as a shared clipboard between any two devices. Instead of relying on a single browser's copy-paste memory, it lets you push text, an image, or a small file to a temporary, encrypted storage slot identified by a random 6-digit code. Open the site on a second device — a phone, laptop, tablet, or even a shared computer — type in that code, and your content appears immediately. There is nothing to install and nothing to configure.</p>
+    <p>The idea is simple, but it solves a problem almost everyone runs into multiple times a week: getting a piece of information from the device you have it on to the device you actually need it on, right now, without emailing yourself or fighting with a messaging app's compression.</p>
 
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        How does Online Clipboard work?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">Your content is temporarily stored on our servers and linked to a unique 6-digit code. Enter that code on any other device to retrieve it instantly. Everything is deleted automatically after 24 hours.</div>
-    </div>
+    <h2>Why Not Just Use Email or WhatsApp?</h2>
+    <p>Emailing yourself a link works, but it means opening a mail client, finding your own address, and waiting for the round trip. Messaging apps like WhatsApp or Telegram are built for conversations, not transfers — they compress images, bury files in chat history, and require both devices to be signed into the same account. Cloud drives like Google Drive or Dropbox require an upload, a sync delay, and often a login on the receiving end too. Online Clipboard skips all of that: there is no account, no chat thread, no folder structure, and no compression. You paste or upload, get a code, and retrieve — usually in under ten seconds end to end.</p>
 
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Is it free to use?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">Yes, completely free. No account, no subscription, no hidden charges. The service is supported by non-intrusive advertising.</div>
-    </div>
+    <h2>How Your Data Is Handled</h2>
+    <p>Every transfer is encrypted in transit and stored only long enough to be retrieved — a strict 24-hour window, after which it is permanently and automatically deleted from our servers. We do not ask for an email address, a phone number, or any account details, and we never associate a transfer with a personal identity. You can read the full breakdown on our <a href="privacy.html">Privacy Policy</a> page.</p>
 
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        How long does my content stay available?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">All content is automatically and permanently deleted after 24 hours. You can see a countdown timer when you send something. There is no way to extend the expiry — just resend if needed.</div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        What file types and sizes are supported?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">Any file type up to 5 MB is supported. For images, PNG, JPG, GIF, and WebP are accepted. Text transfers have no practical size limit.</div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Is my data private and secure?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">All transfers are encrypted in transit. We do not require any personal information, and we do not log the content of your transfers. Data is permanently erased after 24 hours and never associated with any identity.</div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Does it work on all devices and browsers?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">Yes. Online Clipboard works on any device with a modern browser — Chrome, Firefox, Safari, Edge — on phones, tablets, laptops, and desktops running iOS, Android, Windows, macOS, or Linux.</div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        What happens if I enter the wrong code?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-a">You will see a "Code not found or expired" message. Double-check the 6 digits and try again. If the code has expired (after 24 hours), the original sender will need to resend the content.</div>
+    <h2>Explore More</h2>
+    <p>If you want a deeper walkthrough or ideas for how to fit this into your daily workflow, these pages go into more detail:</p>
+    <div class="info-grid">
+      <div class="info-card"><h3>📖 How to Use</h3><p>A full step-by-step guide covering every feature, from drag-and-drop uploads to QR code retrieval. <a href="how-to-use.html">Read the guide →</a></p></div>
+      <div class="info-card"><h3>💡 10 Smart Tips</h3><p>Clever, non-obvious ways to use Online Clipboard beyond the basics — from password handoff to classroom sharing. <a href="tips.html">See the tips →</a></p></div>
+      <div class="info-card"><h3>👥 Who Uses It</h3><p>How students, developers, designers, and remote workers each use the tool differently. <a href="use-cases.html">See use cases →</a></p></div>
+      <div class="info-card"><h3>📰 Blog</h3><p>Longer articles on cross-device workflows, digital privacy, and productivity. <a href="blog.html">Visit the blog →</a></p></div>
     </div>
   </div>
 
@@ -374,32 +372,40 @@ textarea::placeholder{color:var(--muted)}
     <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;text-align:center;margin-bottom:24px;letter-spacing:-0.5px;">Frequently Asked <span style="background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Questions</span></div>
     <div id="faq-list">
       <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How does Online Clipboard work? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">Your content is temporarily stored on our servers and linked to a unique 6-digit code. Enter that code on any other device to retrieve it instantly. Everything is deleted automatically after 24 hours.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Is Online Clipboard free to use? <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">Yes, completely free. No signup, no payment, no premium tier. All features are available to everyone at no cost.</div>
+        <div class="faq-a">Yes, completely free. No signup, no payment, no premium tier. All features are available to everyone at no cost, supported by non-intrusive advertising.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">How long does my content stay available? <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">All content is automatically deleted after 24 hours. Make sure to retrieve your content within that window.</div>
+        <div class="faq-a">All content is automatically and permanently deleted after 24 hours. A countdown timer shows exactly when your code expires. There is no way to extend it — just resend if needed.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">What file types and sizes are supported? <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">Any file type up to 5 MB. For images, PNG, JPG, GIF and WebP are supported. For text, there is no practical character limit.</div>
+        <div class="faq-a">Any file type up to 5 MB. For images, PNG, JPG, GIF and WebP are supported at full quality. For text, there is no practical character limit.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">Is my data secure? <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">All content is encrypted in transit. We do not require personal information and content is permanently deleted after 24 hours.</div>
+        <div class="faq-q">Is my data private and secure? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">All transfers are encrypted in transit. We do not require personal information or log the content of your transfers, and everything is permanently erased after 24 hours.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Do I need to create an account? <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">No account needed. Just open the site, paste or upload your content, and share the 6-digit code. No registration required.</div>
+        <div class="faq-a">No account needed. Just open the site, paste or upload your content, and share the 6-digit code. No registration or email required.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Can multiple people retrieve the same code? <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">Yes, anyone with the 6-digit code can retrieve the content within 24 hours — great for sharing with a group.</div>
+        <div class="faq-a">Yes, anyone with the 6-digit code can retrieve the content within 24 hours — great for sharing with a group, a classroom, or a meeting.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">What devices and browsers are supported? <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">All modern browsers — Chrome, Firefox, Safari, Edge — on phones, tablets, laptops and desktops. No plugins required.</div>
+        <div class="faq-a">All modern browsers — Chrome, Firefox, Safari, Edge — on phones, tablets, laptops and desktops running iOS, Android, Windows, macOS, or Linux. No plugins required.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What happens if I enter the wrong code? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">You will see a "Code not found or expired" message. Double-check the 6 digits and try again. If the code has actually expired, the original sender will need to resend the content.</div>
       </div>
     </div>
   </div>
@@ -407,10 +413,13 @@ textarea::placeholder{color:var(--muted)}
   <div class="site-footer">
     &copy; 2026 Online Clipboard &nbsp;|&nbsp;
     <a href="about.html">About</a> &nbsp;|&nbsp;
-    <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp;
     <a href="how-to-use.html">How to Use</a> &nbsp;|&nbsp;
     <a href="tips.html">Tips</a> &nbsp;|&nbsp;
-    <a href="use-cases.html">Use Cases</a>
+    <a href="use-cases.html">Use Cases</a> &nbsp;|&nbsp;
+    <a href="blog.html">Blog</a> &nbsp;|&nbsp;
+    <a href="contact.html">Contact</a> &nbsp;|&nbsp;
+    <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp;
+    <a href="terms.html">Terms</a>
   </div>
 </div>
 
@@ -452,15 +461,6 @@ textarea::placeholder{color:var(--muted)}
   const savedTheme = localStorage.getItem('clipTheme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
   document.getElementById('theme-btn').textContent = savedTheme === 'dark' ? '🌙 Dark' : '☀️ Light';
-
-  // FAQ
-  window.toggleFaq = function(btn) {
-    const answer = btn.nextElementSibling;
-    const isOpen = answer.classList.contains('open');
-    document.querySelectorAll('.faq-a.open').forEach(a => a.classList.remove('open'));
-    document.querySelectorAll('.faq-q.open').forEach(q => q.classList.remove('open'));
-    if (!isOpen) { answer.classList.add('open'); btn.classList.add('open'); }
-  };
 
   window.switchTab = switchTab; window.switchType = switchType; window.pasteClipboard = pasteClipboard;
   window.handleImageFile = handleImageFile; window.handleFileSelect = handleFileSelect; window.clearFile = clearFile;
