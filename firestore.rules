@@ -1,0 +1,45 @@
+rules_version = '2';
+
+// Firestore security rules for Online Clipboard.
+// Deploy with:  firebase deploy --only firestore:rules
+// or paste into Firebase Console → Firestore Database → Rules → Publish.
+//
+// This is a no-signup public tool, so these collections are intentionally
+// world-readable/writable — but scoped to ONLY the collections the app uses,
+// with light guards. See the note at the bottom about tightening further.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- Stored clips: text / image / file, auto-expiring within 24h -------
+    match /clips/{code} {
+      allow read: if true;
+      // New clips must carry an expiry no more than 25h out (app uses ≤24h).
+      allow create: if request.resource.data.expiresAt is timestamp
+                    && request.resource.data.expiresAt < request.time + duration.value(25, 'h');
+      // update = read-receipt (openedAt / opens). delete = burn-after-read + expiry cleanup.
+      allow update, delete: if true;
+    }
+
+    // --- Large payload chunks (files/images over the 1 MiB doc limit) ------
+    match /clipChunks/{chunkId} {
+      allow read, create, delete: if true;
+    }
+
+    // --- WebRTC signaling for live P2P transfers ---------------------------
+    // NOTE: only SDP offers/answers and ICE candidates live here — never file
+    // data. The actual bytes stream device-to-device and never touch Firestore.
+    match /signals/{code} {
+      allow read, create, update, delete: if true;
+      // callerCandidates + calleeCandidates subcollections
+      match /{candSet}/{candId} {
+        allow read, create, delete: if true;
+      }
+    }
+  }
+}
+
+// Hardening ideas for later (not enabled, to avoid breaking the current flow):
+//   * Cap payload field sizes on `clips` create.
+//   * Add per-IP / App Check write throttling to prevent quota abuse.
+//   * Require signaling docs to also carry a ≤2h expiresAt on create.

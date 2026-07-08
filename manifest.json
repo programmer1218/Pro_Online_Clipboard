@@ -1,0 +1,16 @@
+{
+  "name": "Online Clipboard — Copy. Share. Anywhere.",
+  "short_name": "Clipboard",
+  "description": "Free online clipboard to instantly share text, images and files between any devices using a 6-digit code.",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "favicon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" },
+    { "src": "favicon-32.png", "sizes": "32x32", "type": "image/png" }
+  ]
+}

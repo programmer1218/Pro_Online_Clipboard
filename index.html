@@ -34,7 +34,7 @@
     { "@type": "Question", "name": "How does Online Clipboard work?", "acceptedAnswer": { "@type": "Answer", "text": "Your content is temporarily stored on our servers and linked to a unique 6-digit code. Enter that code on any other device to retrieve it instantly. Everything is deleted automatically after 24 hours." } },
     { "@type": "Question", "name": "Is Online Clipboard free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No signup, no payment, no premium tier. All features are available to everyone at no cost, supported by non-intrusive advertising." } },
     { "@type": "Question", "name": "How long does my content stay available?", "acceptedAnswer": { "@type": "Answer", "text": "All content is automatically and permanently deleted after 24 hours. A countdown timer shows exactly when your code expires." } },
-    { "@type": "Question", "name": "What file types and sizes are supported?", "acceptedAnswer": { "@type": "Answer", "text": "Any file type up to 5 MB. For images, PNG, JPG, GIF and WebP are supported at full quality. For text, there is no practical character limit." } },
+    { "@type": "Question", "name": "What file types and sizes are supported?", "acceptedAnswer": { "@type": "Answer", "text": "Any file type up to 20 MB. For images, PNG, JPG, GIF and WebP are supported at full quality. For text, there is no practical character limit." } },
     { "@type": "Question", "name": "Is my data private and secure?", "acceptedAnswer": { "@type": "Answer", "text": "All transfers are encrypted in transit. We do not require personal information or log the content of your transfers, and everything is permanently erased after 24 hours." } },
     { "@type": "Question", "name": "Do I need to create an account?", "acceptedAnswer": { "@type": "Answer", "text": "No account needed. Just open the site, paste or upload your content, and share the 6-digit code." } }
   ]
@@ -46,6 +46,12 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="favicon-180.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Clipboard">
 <script src="https://unpkg.com/qrcode-generator@1.4.4/qrcode.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
@@ -207,6 +213,38 @@ textarea::placeholder{color:var(--muted)}
 .info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
 .info-card h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px}
 .info-card p{font-size:13px;margin-bottom:0}
+/* Send options + security */
+.send-options{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px;display:flex;flex-direction:column;gap:14px}
+.opt-row{display:flex;gap:12px;flex-wrap:wrap}
+.opt-field{flex:1;min-width:150px;display:flex;flex-direction:column;gap:6px}
+.opt-field label{font-size:12px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:6px}
+.opt-input,.opt-select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:11px 13px;outline:none;transition:border 0.2s}
+.opt-input:focus,.opt-select:focus{border-color:var(--accent)}
+.opt-select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c7c9a' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:36px}
+.opt-check{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;color:var(--text)}
+.opt-check input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer}
+.opt-hint{font-size:11px;color:var(--muted);line-height:1.5}
+.enc-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.25);color:var(--success)}
+.progress-wrap{margin-top:14px;display:none}
+.progress-wrap.show{display:block}
+.progress-track{height:8px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:20px;transition:width 0.25s ease}
+.progress-label{font-size:11px;color:var(--muted);margin-top:6px;text-align:center}
+.lock-note{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--warn);background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.22);border-radius:10px;padding:10px 13px;margin-top:12px}
+/* Read-receipt + live P2P status */
+.receipt-status,.live-status{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:500;margin-top:12px;padding:10px 14px;border-radius:10px}
+.receipt-status{background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+.receipt-status.opened{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.25);color:var(--success)}
+.live-status{background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.25);color:var(--accent2)}
+.live-status.connected{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.25);color:var(--success)}
+.live-status.failed{background:rgba(248,113,113,0.1);border-color:rgba(248,113,113,0.25);color:var(--error)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:pulse 1.2s infinite}
+.p2p-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;margin-left:4px;vertical-align:middle;letter-spacing:.3px}
+/* P2P receive panel */
+.p2p-recv{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-top:16px;display:none}
+.p2p-recv.show{display:block}
+.p2p-recv .recv-file{display:flex;align-items:center;gap:12px;font-size:14px;margin-bottom:12px}
+.p2p-recv .recv-file svg{width:22px;height:22px;color:var(--accent2);flex-shrink:0}
 </style>
 </head>
 <body>
@@ -256,6 +294,9 @@ textarea::placeholder{color:var(--muted)}
       <button class="tab" id="type-file" onclick="switchType('file', this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>File
       </button>
+      <button class="tab" id="type-p2p" onclick="switchType('p2p', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>P2P
+      </button>
     </div>
 
     <div id="send-text-area" class="card">
@@ -272,7 +313,7 @@ textarea::placeholder{color:var(--muted)}
       <div class="dropzone" id="img-drop" onclick="document.getElementById('img-file').click()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
         <p>Drop image here or <span>click to browse</span></p>
-        <p style="font-size:12px;margin-top:4px;">PNG, JPG, GIF, WebP</p>
+        <p style="font-size:12px;margin-top:4px;">PNG, JPG, GIF, WebP — Max 20 MB</p>
         <input type="file" id="img-file" accept="image/*" onchange="handleImageFile(this.files[0])"/>
       </div>
       <div id="img-preview-box" class="img-preview" style="display:none;"><img id="img-preview-el" src="" alt="preview"/></div>
@@ -283,7 +324,7 @@ textarea::placeholder{color:var(--muted)}
       <div class="dropzone" id="file-drop" onclick="document.getElementById('file-input').click()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <p>Drop file here or <span>click to browse</span></p>
-        <p style="font-size:12px;margin-top:4px;">Max 5 MB</p>
+        <p style="font-size:12px;margin-top:4px;">Max 20 MB</p>
         <input type="file" id="file-input" onchange="handleFileSelect(this.files[0])"/>
       </div>
       <div id="file-preview-box" class="file-preview" style="display:none;">
@@ -294,9 +335,53 @@ textarea::placeholder{color:var(--muted)}
       </div>
     </div>
 
+    <div id="send-p2p-area" class="card" style="display:none;">
+      <div class="card-title">Live peer-to-peer transfer <span class="p2p-tag">DIRECT</span></div>
+      <div class="dropzone" id="p2p-drop" onclick="document.getElementById('p2p-input').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <p>Drop a file here or <span>click to browse</span></p>
+        <p style="font-size:12px;margin-top:4px;">Any size — nothing is uploaded to a server</p>
+        <input type="file" id="p2p-input" onchange="handleP2PFile(this.files[0])"/>
+      </div>
+      <div id="p2p-preview-box" class="file-preview" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="file-name" id="p2p-file-name">—</span>
+        <span class="file-size" id="p2p-file-size"></span>
+        <button class="file-remove" onclick="clearP2PFile()">✕</button>
+      </div>
+      <div class="lock-note" style="color:var(--accent2);background:rgba(108,99,255,0.08);border-color:rgba(108,99,255,0.2);">⚡ Both devices must stay open until the transfer finishes. The file streams directly, device to device — the server only helps them find each other.</div>
+    </div>
+
+    <div class="send-options">
+      <div class="opt-row">
+        <div class="opt-field">
+          <label>⏱ Auto-delete after</label>
+          <select class="opt-select" id="expiry-select">
+            <option value="1">1 hour</option>
+            <option value="6">6 hours</option>
+            <option value="24" selected>24 hours</option>
+          </select>
+        </div>
+        <div class="opt-field">
+          <label>🔑 Password <span style="opacity:.7">(optional)</span></label>
+          <input class="opt-input" id="send-password" type="password" autocomplete="new-password" placeholder="Leave empty for none"/>
+        </div>
+      </div>
+      <label class="opt-check">
+        <input type="checkbox" id="burn-check"/>
+        <span>🔥 Burn after reading — delete the moment it's retrieved once</span>
+      </label>
+      <div class="opt-hint" id="enc-hint">Add a password to <strong>end-to-end encrypt</strong> your content. It's encrypted in your browser — the server only ever stores unreadable ciphertext.</div>
+    </div>
+
     <button class="btn-primary" id="send-btn" onclick="sendContent()">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Send
     </button>
+
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label">Uploading… 0%</div>
+    </div>
 
     <div class="code-box" id="code-box">
       <div class="code-label">Your 6-digit retrieval code</div>
@@ -305,7 +390,10 @@ textarea::placeholder{color:var(--muted)}
         <button class="code-copy" onclick="copyCode()">📋 Copy Code</button>
         <button class="share-btn" onclick="shareCode()">🔗 Share</button>
       </div>
-      <div class="timer-box">⏱ Expires in <span id="timer-display">24:00:00</span></div>
+      <div class="timer-box" id="timer-box">⏱ Expires in <span id="timer-display">24:00:00</span></div>
+      <div class="lock-note" id="send-lock-note" style="display:none;">🔒 End-to-end encrypted — the receiver must enter the password to open it.</div>
+      <div class="live-status" id="live-status" style="display:none;"></div>
+      <div class="receipt-status" id="receipt-status" style="display:none;"></div>
       <div class="qr-box" id="qr-box">
         <div class="qr-label">SCAN TO RETRIEVE</div>
         <div id="qr-canvas"></div>
@@ -329,9 +417,28 @@ textarea::placeholder{color:var(--muted)}
         <input class="code-input" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" oninput="moveNext(this,4)" onkeydown="movePrev(event,4)"/>
         <input class="code-input" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" oninput="moveNext(this,5)" onkeydown="movePrev(event,5)"/>
       </div>
+      <div class="opt-field" id="retrieve-pass-field" style="display:none;margin-top:4px;">
+        <label>🔒 This clip is password-protected</label>
+        <input class="opt-input" id="retrieve-password" type="password" autocomplete="off" placeholder="Enter the password to unlock"/>
+      </div>
       <button class="btn-primary" id="retrieve-btn" onclick="retrieveContent()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Retrieve
       </button>
+    </div>
+    <div class="p2p-recv" id="p2p-recv">
+      <div class="recv-file">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <div style="flex:1">
+          <div style="font-weight:600;" id="p2p-recv-name">Incoming file…</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;" id="p2p-recv-size"></div>
+        </div>
+      </div>
+      <div class="live-status" id="p2p-recv-status" style="margin-top:0;"><span class="live-dot"></span> Connecting peer-to-peer…</div>
+      <div class="progress-wrap show" id="p2p-recv-progress" style="display:none;">
+        <div class="progress-track"><div class="progress-fill" id="p2p-recv-fill"></div></div>
+        <div class="progress-label" id="p2p-recv-label">Receiving… 0%</div>
+      </div>
+      <div id="p2p-recv-done" style="margin-top:12px;"></div>
     </div>
     <div class="result-box" id="result-box">
       <button class="copy-result" id="copy-result-btn" onclick="copyResult()">Copy</button>
@@ -385,7 +492,7 @@ textarea::placeholder{color:var(--muted)}
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">What file types and sizes are supported? <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">Any file type up to 5 MB. For images, PNG, JPG, GIF and WebP are supported at full quality. For text, there is no practical character limit.</div>
+        <div class="faq-a">Any file type up to 20 MB. For images, PNG, JPG, GIF and WebP are supported at full quality. For text, there is no practical character limit.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Is my data private and secure? <span class="faq-arrow">▾</span></div>
@@ -427,7 +534,7 @@ textarea::placeholder{color:var(--muted)}
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, doc, setDoc, getDoc, deleteDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, doc, setDoc, getDoc, deleteDoc, updateDoc, onSnapshot, addDoc, increment, collection, query, where, limit, getDocs, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey:"AIzaSyAqLhZyuDLj3NRylACyHNu7tmTKeZ-GQDA",
@@ -449,6 +556,49 @@ textarea::placeholder{color:var(--muted)}
 
   let currentType='text', selectedFile=null, selectedImageData=null, lastCode='', lastResultData=null, timerInterval=null;
   let codeHistory = JSON.parse(localStorage.getItem('clipHistory')||'[]');
+  let receiptUnsub=null;   // read-receipt listener for the current sent clip
+  let p2pFile=null;        // file selected for a live P2P transfer
+  let p2pConn=null;        // active RTCPeerConnection (sender or receiver) so we can tear it down
+  let p2pUnsubs=[];        // Firestore signaling listeners to detach on cleanup
+
+  // Public STUN servers for NAT traversal. No TURN — most home/mobile networks connect
+  // fine over STUN; strict symmetric-NAT corporate networks may fail to establish P2P.
+  const ICE_SERVERS = { iceServers:[
+    { urls:'stun:stun.l.google.com:19302' },
+    { urls:'stun:stun1.l.google.com:19302' }
+  ] };
+  const P2P_CHUNK = 16*1024;          // 16 KB DataChannel messages
+  const P2P_BUFFER_HIGH = 8*1024*1024; // pause sending when buffered bytes exceed this
+
+  const MAX_SIZE = 20*1024*1024; // 20 MB — enforced client-side before upload
+  const CHUNK_SIZE = 900000; // chars per Firestore doc, safely under the 1 MiB document limit
+
+  // ---- End-to-end encryption (AES-GCM, key derived from password via PBKDF2) ----
+  // Content is encrypted in the browser; the server only ever stores ciphertext + salt + iv.
+  // The password never leaves the device, so we cannot recover it — wrong password = no decrypt.
+  const cryptoOK = !!(window.crypto && window.crypto.subtle);
+  function bytesToB64(bytes){ let s=''; const a=new Uint8Array(bytes); for(let i=0;i<a.length;i++) s+=String.fromCharCode(a[i]); return btoa(s); }
+  function b64ToBytes(b64){ const s=atob(b64); const a=new Uint8Array(s.length); for(let i=0;i<s.length;i++) a[i]=s.charCodeAt(i); return a; }
+
+  async function deriveKey(password, salt){
+    const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name:'PBKDF2', salt, iterations:150000, hash:'SHA-256' },
+      km, { name:'AES-GCM', length:256 }, false, ['encrypt','decrypt']
+    );
+  }
+  async function encryptString(plain, password){
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await deriveKey(password, salt);
+    const ct = await crypto.subtle.encrypt({ name:'AES-GCM', iv }, key, new TextEncoder().encode(plain));
+    return { salt: bytesToB64(salt), iv: bytesToB64(iv), data: bytesToB64(ct) };
+  }
+  async function decryptString(cipherB64, saltB64, ivB64, password){
+    const key = await deriveKey(password, b64ToBytes(saltB64));
+    const pt = await crypto.subtle.decrypt({ name:'AES-GCM', iv:b64ToBytes(ivB64) }, key, b64ToBytes(cipherB64));
+    return new TextDecoder().decode(pt);
+  }
 
   // Theme
   window.toggleTheme = function() {
@@ -468,6 +618,7 @@ textarea::placeholder{color:var(--muted)}
   window.moveNext = moveNext; window.movePrev = movePrev;
   window.retrieveContent = retrieveContent; window.copyResult = copyResult;
   window.downloadImage = downloadImage; window.downloadFile = downloadFile;
+  window.handleP2PFile = handleP2PFile; window.clearP2PFile = clearP2PFile;
 
   function switchTab(tab, el) {
     document.querySelectorAll('#panel-send,#panel-retrieve').forEach(p=>p.classList.remove('active'));
@@ -483,6 +634,13 @@ textarea::placeholder{color:var(--muted)}
     document.getElementById('send-text-area').style.display=type==='text'?'block':'none';
     document.getElementById('send-image-area').style.display=type==='image'?'block':'none';
     document.getElementById('send-file-area').style.display=type==='file'?'block':'none';
+    document.getElementById('send-p2p-area').style.display=type==='p2p'?'block':'none';
+    // Expiry/password/burn only apply to stored clips, not live P2P streams.
+    document.querySelector('.send-options').style.display=type==='p2p'?'none':'flex';
+    const sendBtn=document.getElementById('send-btn');
+    sendBtn.innerHTML = type==='p2p'
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Start P2P transfer'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Send';
     document.getElementById('code-box').classList.remove('show');
   }
 
@@ -501,6 +659,7 @@ textarea::placeholder{color:var(--muted)}
   function handleImageFile(file) {
     if(!file) return;
     if(!file.type.startsWith('image/')){ showToast('Please select an image file','error'); return; }
+    if(file.size>MAX_SIZE){ showToast('Image must be under 20 MB','error'); return; }
     const reader = new FileReader();
     reader.onload = e => {
       selectedImageData = e.target.result;
@@ -517,7 +676,7 @@ textarea::placeholder{color:var(--muted)}
 
   function handleFileSelect(file) {
     if(!file) return;
-    if(file.size>5*1024*1024){ showToast('File must be under 5 MB','error'); return; }
+    if(file.size>MAX_SIZE){ showToast('File must be under 20 MB','error'); return; }
     selectedFile=file;
     document.getElementById('sel-file-name').textContent=file.name;
     document.getElementById('sel-file-size').textContent=formatBytes(file.size);
@@ -529,6 +688,20 @@ textarea::placeholder{color:var(--muted)}
   fileDrop.addEventListener('dragover', e=>{e.preventDefault();fileDrop.classList.add('drag')});
   fileDrop.addEventListener('dragleave', ()=>fileDrop.classList.remove('drag'));
   fileDrop.addEventListener('drop', e=>{e.preventDefault();fileDrop.classList.remove('drag');handleFileSelect(e.dataTransfer.files[0])});
+
+  // P2P file — no size limit (streamed, never stored)
+  function handleP2PFile(file){
+    if(!file) return;
+    p2pFile=file;
+    document.getElementById('p2p-file-name').textContent=file.name;
+    document.getElementById('p2p-file-size').textContent=formatBytes(file.size);
+    document.getElementById('p2p-preview-box').style.display='flex';
+  }
+  function clearP2PFile(){ p2pFile=null; document.getElementById('p2p-input').value=''; document.getElementById('p2p-preview-box').style.display='none'; }
+  const p2pDrop = document.getElementById('p2p-drop');
+  p2pDrop.addEventListener('dragover', e=>{e.preventDefault();p2pDrop.classList.add('drag')});
+  p2pDrop.addEventListener('dragleave', ()=>p2pDrop.classList.remove('drag'));
+  p2pDrop.addEventListener('drop', e=>{e.preventDefault();p2pDrop.classList.remove('drag');handleP2PFile(e.dataTransfer.files[0])});
 
   function genCode(){ return String(Math.floor(100000+Math.random()*900000)); }
 
@@ -596,39 +769,122 @@ textarea::placeholder{color:var(--muted)}
   }
   renderHistory();
 
+  async function writeChunks(code, str, expiresAt, onProgress) {
+    const total = Math.ceil(str.length / CHUNK_SIZE);
+    let done = 0;
+    const writes = [];
+    for(let i=0;i<total;i++){
+      writes.push(
+        setDoc(doc(db,'clipChunks',`${code}_${i}`),{d:str.slice(i*CHUNK_SIZE,(i+1)*CHUNK_SIZE),expiresAt})
+          .then(()=>{ done++; if(onProgress) onProgress(done/total); })
+      );
+    }
+    await Promise.all(writes);
+    return total;
+  }
+
+  async function readChunks(code, count) {
+    const snaps = await Promise.all(Array.from({length:count},(_,i)=>getDoc(doc(db,'clipChunks',`${code}_${i}`))));
+    return snaps.map(s=>s.data()?.d||'').join('');
+  }
+
+  async function deleteChunks(code, count) {
+    await Promise.all(Array.from({length:count},(_,i)=>deleteDoc(doc(db,'clipChunks',`${code}_${i}`)).catch(()=>{})));
+  }
+
+  // Best-effort cleanup of expired clips/chunks so free-tier storage never grows unbounded.
+  // Runs opportunistically after each send — no server/Cloud Functions required.
+  async function runCleanup() {
+    try {
+      const expiredClips = await getDocs(query(collection(db,'clips'), where('expiresAt','<',Timestamp.now()), limit(5)));
+      for (const d of expiredClips.docs) {
+        const data = d.data();
+        await deleteDoc(d.ref);
+        if(data.payload?.chunked) await deleteChunks(d.id, data.payload.chunkCount);
+      }
+      const expiredChunks = await getDocs(query(collection(db,'clipChunks'), where('expiresAt','<',Timestamp.now()), limit(20)));
+      await Promise.all(expiredChunks.docs.map(d=>deleteDoc(d.ref)));
+      // Abandoned P2P signaling docs (sender closed the tab before a receiver connected).
+      const expiredSignals = await getDocs(query(collection(db,'signals'), where('expiresAt','<',Timestamp.now()), limit(5)));
+      await Promise.all(expiredSignals.docs.map(d=>deleteDoc(d.ref).catch(()=>{})));
+    } catch(e) { /* best-effort only */ }
+  }
+
+  function setProgress(frac, label){
+    const wrap=document.getElementById('progress-wrap');
+    wrap.classList.add('show');
+    document.getElementById('progress-fill').style.width=Math.round(frac*100)+'%';
+    document.getElementById('progress-label').textContent=(label||'Uploading… ')+Math.round(frac*100)+'%';
+  }
+  function hideProgress(){ document.getElementById('progress-wrap').classList.remove('show'); document.getElementById('progress-fill').style.width='0'; }
+
   async function sendContent() {
+    // Tear down any previous read-receipt listener before starting a new send.
+    if(receiptUnsub){ try{receiptUnsub();}catch(_){} receiptUnsub=null; }
+    if(currentType==='p2p'){ return startP2PSend(); }
     const btn = document.getElementById('send-btn');
-    let payload = null;
+    let payload = null, bigString = null;
     if(currentType==='text'){
       const txt = document.getElementById('text-input').value.trim();
       if(!txt){ showToast('Please enter some text to send','error'); return; }
-      payload={type:'text',data:txt};
+      payload={type:'text'}; bigString = txt;
     } else if(currentType==='image'){
       if(!selectedImageData){ showToast('Please select an image','error'); return; }
-      payload={type:'image',data:selectedImageData};
+      payload={type:'image'}; bigString = selectedImageData;
     } else if(currentType==='file'){
       if(!selectedFile){ showToast('Please select a file','error'); return; }
-      const b64 = await fileToBase64(selectedFile);
-      payload={type:'file',data:b64,name:selectedFile.name,size:selectedFile.size,mime:selectedFile.type};
+      bigString = await fileToBase64(selectedFile);
+      payload={type:'file',name:selectedFile.name,size:selectedFile.size,mime:selectedFile.type};
     }
+
+    // Read send options
+    const hours = parseInt(document.getElementById('expiry-select').value,10) || 24;
+    const password = document.getElementById('send-password').value;
+    const burn = document.getElementById('burn-check').checked;
+
     btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Sending...';
+    hideProgress();
     try {
+      // Optional end-to-end encryption
+      if(password){
+        if(!cryptoOK){ showToast('Encryption not supported in this browser','error'); resetSendBtn(btn); return; }
+        btn.innerHTML='<span class="spinner"></span> Encrypting...';
+        const enc = await encryptString(bigString, password);
+        bigString = enc.data;
+        payload.enc = true; payload.salt = enc.salt; payload.iv = enc.iv;
+      }
+
       const code = genCode();
-      const expiresAt = Timestamp.fromMillis(Date.now()+24*60*60*1000);
-      await setDoc(doc(db,'clips',code),{payload,createdAt:Timestamp.now(),expiresAt});
+      const expiryMs = hours*60*60*1000;
+      const expiresAt = Timestamp.fromMillis(Date.now()+expiryMs);
+      if(bigString.length > CHUNK_SIZE){
+        payload.chunked = true;
+        setProgress(0);
+        payload.chunkCount = await writeChunks(code, bigString, expiresAt, f=>setProgress(f));
+      } else {
+        payload.data = bigString;
+      }
+      await setDoc(doc(db,'clips',code),{payload,burn,createdAt:Timestamp.now(),expiresAt});
+      hideProgress();
       lastCode=code;
       const digits = document.getElementById('code-digits');
       digits.innerHTML='';
       code.split('').forEach(d=>{const el=document.createElement('div');el.className='code-digit';el.textContent=d;digits.appendChild(el)});
       document.getElementById('code-box').classList.add('show');
+      document.getElementById('send-lock-note').style.display = password ? 'flex' : 'none';
+      document.getElementById('live-status').style.display='none';
+      document.getElementById('timer-box').style.display='block';
       generateQR(code);
-      startTimer(Date.now()+24*60*60*1000);
+      startTimer(Date.now()+expiryMs);
       addToHistory(code);
       launchConfetti();
+      watchReceipt(code, burn);
       showToast('Sent! Share the 6-digit code.','success');
-    } catch(err){ console.error(err); showToast('Failed to send. Check your connection.','error'); }
-    btn.disabled=false; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Send';
+      runCleanup();
+    } catch(err){ console.error(err); hideProgress(); showToast('Failed to send. Check your connection.','error'); }
+    resetSendBtn(btn);
   }
+  function resetSendBtn(btn){ btn.disabled=false; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Send'; }
 
   function copyCode(){ navigator.clipboard.writeText(lastCode).then(()=>showToast('Code copied!','success')); }
 
@@ -646,6 +902,8 @@ textarea::placeholder{color:var(--muted)}
   }
   function movePrev(e,idx){ if(e.key==='Backspace'&&!codeInputs[idx].value&&idx>0){codeInputs[idx-1].focus();codeInputs[idx-1].value='';} }
 
+  function resetRetrieveBtn(btn){ btn.disabled=false; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve'; }
+
   async function retrieveContent() {
     const code=Array.from(codeInputs).map(i=>i.value).join('');
     if(code.length<6){showToast('Enter the full 6-digit code','error');return;}
@@ -653,43 +911,328 @@ textarea::placeholder{color:var(--muted)}
     btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Retrieving...';
     try {
       const snap=await getDoc(doc(db,'clips',code));
-      if(!snap.exists()){showToast('Code not found or expired','error');btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve';return;}
-      const{payload,expiresAt}=snap.data();
-      if(expiresAt&&expiresAt.toMillis()<Date.now()){await deleteDoc(doc(db,'clips',code));showToast('Code not found or expired','error');btn.disabled=false;btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve';return;}
-      lastResultData=payload;
+      if(!snap.exists()){
+        // Not a stored clip — maybe it's a live peer-to-peer session waiting to connect.
+        const sigSnap=await getDoc(doc(db,'signals',code));
+        if(sigSnap.exists() && sigSnap.data().offer){ resetRetrieveBtn(btn); return startP2PReceive(code, sigSnap.data()); }
+        showToast('Code not found or expired','error');resetRetrieveBtn(btn);return;
+      }
+      const{payload,expiresAt,burn}=snap.data();
+      if(expiresAt&&expiresAt.toMillis()<Date.now()){
+        await deleteDoc(doc(db,'clips',code));
+        if(payload.chunked) await deleteChunks(code,payload.chunkCount);
+        showToast('Code not found or expired','error');resetRetrieveBtn(btn);return;
+      }
+      // Password-protected (end-to-end encrypted) clips need the password before we do anything.
+      const passField=document.getElementById('retrieve-pass-field');
+      if(payload.enc){
+        const pw=document.getElementById('retrieve-password').value;
+        passField.style.display='block';
+        if(!pw){ showToast('This clip is password-protected — enter the password','error'); resetRetrieveBtn(btn); return; }
+      } else {
+        passField.style.display='none';
+      }
+      let data = payload.data;
+      if(payload.chunked){
+        btn.innerHTML='<span class="spinner"></span> Downloading...';
+        data = await readChunks(code, payload.chunkCount);
+      }
+      if(payload.enc){
+        btn.innerHTML='<span class="spinner"></span> Decrypting...';
+        try {
+          data = await decryptString(data, payload.salt, payload.iv, document.getElementById('retrieve-password').value);
+        } catch(e){
+          showToast('Wrong password — could not decrypt','error'); resetRetrieveBtn(btn); return;
+        }
+      }
+      lastResultData={...payload,data};
       const resultBox=document.getElementById('result-box');
       const resultContent=document.getElementById('result-content');
       const copyBtn=document.getElementById('copy-result-btn');
       resultBox.classList.add('show');
       if(payload.type==='text'){
-        resultContent.innerHTML=`<div class="result-text">${escHtml(payload.data)}</div>`;
+        resultContent.innerHTML=`<div class="result-text">${escHtml(data)}</div>`;
         copyBtn.style.display='block';
       } else if(payload.type==='image'){
-        resultContent.innerHTML=`<div class="result-img"><img src="${payload.data}" alt="shared image"/></div>`;
+        resultContent.innerHTML=`<div class="result-img"><img src="${data}" alt="shared image"/></div>`;
         copyBtn.style.display='none';
-        resultContent.innerHTML+=`<button onclick="downloadImage('${payload.data}')" style="margin-top:10px;background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 18px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download Image</button>`;
+        resultContent.innerHTML+=`<button onclick="downloadImage()" style="margin-top:10px;background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 18px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download Image</button>`;
       } else if(payload.type==='file'){
         resultContent.innerHTML=`<div class="result-file"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div style="flex:1"><div style="font-size:14px;font-weight:500;">${escHtml(payload.name)}</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">${formatBytes(payload.size)}</div></div><button onclick="downloadFile()" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download</button></div>`;
         copyBtn.style.display='none';
       }
-      showToast('Content retrieved!','success');
+      // Read-receipt: notify the sender their clip was opened (best-effort, non-blocking).
+      updateDoc(doc(db,'clips',code),{openedAt:Timestamp.now(),opens:increment(1)}).catch(()=>{});
+      // Burn after reading: delete the clip the moment it's successfully retrieved once.
+      if(burn){
+        deleteDoc(doc(db,'clips',code)).catch(()=>{});
+        if(payload.chunked) deleteChunks(code,payload.chunkCount);
+        showToast('Retrieved — this clip has now been burned 🔥','success');
+      } else {
+        showToast('Content retrieved!','success');
+      }
+      document.getElementById('retrieve-password').value='';
     } catch(err){console.error(err);showToast('Failed to retrieve. Check your connection.','error');}
-    btn.disabled=false; btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Retrieve';
+    resetRetrieveBtn(btn);
   }
 
   function copyResult(){ if(lastResultData&&lastResultData.type==='text'){navigator.clipboard.writeText(lastResultData.data).then(()=>showToast('Copied to clipboard!','success'));} }
-  function downloadImage(src){const a=document.createElement('a');a.href=src;a.download='shared-image.png';a.click();}
+  function downloadImage(){if(!lastResultData)return;const a=document.createElement('a');a.href=lastResultData.data;a.download='shared-image.png';a.click();}
   function downloadFile(){if(!lastResultData)return;const a=document.createElement('a');a.href=lastResultData.data;a.download=lastResultData.name;a.click();}
   function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');setTimeout(()=>{t.className='toast';},3000);}
   function formatBytes(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB';}
   function fileToBase64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});}
   function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
+  // ---- Read-receipt: watch a sent clip and tell the sender when it's opened ----
+  function watchReceipt(code, burn){
+    const el=document.getElementById('receipt-status');
+    el.style.display='flex'; el.className='receipt-status';
+    el.innerHTML='<span class="live-dot"></span> Waiting to be opened…';
+    let opened=false;
+    receiptUnsub = onSnapshot(doc(db,'clips',code), snap=>{
+      if(snap.exists()){
+        if(snap.data().openedAt){
+          opened=true;
+          el.className='receipt-status opened';
+          el.innerHTML='✓ Opened on another device';
+        }
+      } else if(opened){
+        // Doc gone after being opened → burn-after-read consumed it.
+        el.className='receipt-status opened';
+        el.innerHTML='✓ Opened, then burned 🔥';
+        if(receiptUnsub){ try{receiptUnsub();}catch(_){} receiptUnsub=null; }
+      }
+    }, ()=>{});
+  }
+
+  // ---- Live P2P (WebRTC) — direct device-to-device transfer, Firestore only signals ----
+  function showCode(code){
+    lastCode=code;
+    const digits=document.getElementById('code-digits'); digits.innerHTML='';
+    code.split('').forEach(d=>{const el=document.createElement('div');el.className='code-digit';el.textContent=d;digits.appendChild(el);});
+    document.getElementById('code-box').classList.add('show');
+  }
+  function setLiveStatus(cls, text){
+    const el=document.getElementById('live-status');
+    el.style.display='flex';
+    el.className='live-status'+(cls?(' '+cls):'');
+    el.innerHTML=(cls==='connected'||cls==='failed'?'':'<span class="live-dot"></span> ')+text;
+  }
+  async function cleanupP2P(code){
+    p2pUnsubs.forEach(u=>{ try{u();}catch(_){} }); p2pUnsubs=[];
+    if(p2pConn){ try{p2pConn.close();}catch(_){} p2pConn=null; }
+    if(code){
+      try{
+        for(const sub of ['callerCandidates','calleeCandidates']){
+          const cs=await getDocs(collection(db,'signals',code,sub));
+          await Promise.all(cs.docs.map(d=>deleteDoc(d.ref).catch(()=>{})));
+        }
+        await deleteDoc(doc(db,'signals',code)).catch(()=>{});
+      }catch(_){}
+    }
+  }
+
+  async function startP2PSend(){
+    if(!p2pFile){ showToast('Pick a file to send','error'); return; }
+    if(!('RTCPeerConnection' in window)){ showToast('P2P not supported in this browser','error'); return; }
+    const btn=document.getElementById('send-btn');
+    btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Setting up…';
+    await cleanupP2P();
+    hideProgress();
+    const code=genCode();
+    const file=p2pFile;
+    try{
+      const pc=new RTCPeerConnection(ICE_SERVERS); p2pConn=pc;
+      const dc=pc.createDataChannel('file',{ordered:true}); dc.binaryType='arraybuffer';
+      const sigRef=doc(db,'signals',code);
+      const callerCands=collection(db,'signals',code,'callerCandidates');
+      const calleeCands=collection(db,'signals',code,'calleeCandidates');
+      const expiresAt=Timestamp.fromMillis(Date.now()+2*60*60*1000);
+      const pendingCands=[];
+
+      pc.onicecandidate=e=>{ if(e.candidate) addDoc(callerCands, e.candidate.toJSON()).catch(()=>{}); };
+      pc.onconnectionstatechange=()=>{ if(['failed','disconnected'].includes(pc.connectionState)) setLiveStatus('failed','Connection lost — ask the receiver to re-enter the code'); };
+
+      const offer=await pc.createOffer(); await pc.setLocalDescription(offer);
+      await setDoc(sigRef,{ offer:{type:offer.type,sdp:offer.sdp}, meta:{name:file.name,size:file.size,mime:file.type||'application/octet-stream'}, createdAt:Timestamp.now(), expiresAt });
+
+      // Live-mode code UI (no 24h timer / receipt — the connection status replaces them).
+      showCode(code);
+      document.getElementById('timer-box').style.display='none';
+      document.getElementById('receipt-status').style.display='none';
+      document.getElementById('send-lock-note').style.display='none';
+      setLiveStatus('', 'Waiting for the receiver to enter the code…');
+      generateQR(code);
+      addToHistory(code);
+
+      p2pUnsubs.push(onSnapshot(sigRef, async snap=>{
+        const d=snap.data();
+        if(d && d.answer && !pc.currentRemoteDescription){
+          try{
+            await pc.setRemoteDescription(d.answer);
+            setLiveStatus('', 'Receiver found — connecting…');
+            for(const c of pendingCands){ try{ await pc.addIceCandidate(c); }catch(_){} }
+            pendingCands.length=0;
+          }catch(_){}
+        }
+      }));
+      p2pUnsubs.push(onSnapshot(calleeCands, snap=>{
+        snap.docChanges().forEach(ch=>{ if(ch.type==='added'){ const c=ch.doc.data(); if(pc.currentRemoteDescription){ try{pc.addIceCandidate(c);}catch(_){} } else pendingCands.push(c); } });
+      }));
+
+      dc.onopen=async ()=>{
+        setLiveStatus('connected','⚡ Connected! Sending…');
+        try{
+          await sendFileOverChannel(dc, file);
+          setLiveStatus('connected','✓ Sent successfully');
+          showToast('File sent!','success');
+          setTimeout(()=>cleanupP2P(code), 3000);
+        }catch(err){ console.error(err); setLiveStatus('failed','Transfer failed'); }
+      };
+      showToast('Share the code — keep this tab open','success');
+    }catch(err){ console.error(err); showToast('Could not start P2P transfer','error'); await cleanupP2P(code); }
+    btn.disabled=false;
+    btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Start P2P transfer';
+  }
+
+  function sendFileOverChannel(dc, file){
+    return new Promise(async (resolve,reject)=>{
+      try{
+        dc.send(JSON.stringify({kind:'meta', name:file.name, size:file.size, mime:file.type||'application/octet-stream'}));
+        dc.bufferedAmountLowThreshold = 1*1024*1024;
+        let offset=0; const total=file.size;
+        while(offset<total){
+          if(dc.readyState!=='open'){ reject(new Error('channel closed')); return; }
+          if(dc.bufferedAmount > P2P_BUFFER_HIGH){
+            await new Promise(res=>{ dc.onbufferedamountlow=()=>{ dc.onbufferedamountlow=null; res(); }; });
+            continue;
+          }
+          const buf=await file.slice(offset, offset+P2P_CHUNK).arrayBuffer();
+          dc.send(buf); offset+=buf.byteLength;
+          setProgress(total?offset/total:1, 'Sending… ');
+        }
+        while(dc.bufferedAmount>0){ await new Promise(r=>setTimeout(r,50)); }
+        dc.send(JSON.stringify({kind:'eof'}));
+        hideProgress();
+        resolve();
+      }catch(e){ reject(e); }
+    });
+  }
+
+  async function startP2PReceive(code, sig){
+    if(!('RTCPeerConnection' in window)){ showToast('P2P not supported in this browser','error'); return; }
+    await cleanupP2P();
+    const recv=document.getElementById('p2p-recv');
+    const statusEl=document.getElementById('p2p-recv-status');
+    document.getElementById('result-box').classList.remove('show');
+    document.getElementById('retrieve-pass-field').style.display='none';
+    recv.classList.add('show');
+    document.getElementById('p2p-recv-done').innerHTML='';
+    document.getElementById('p2p-recv-progress').style.display='none';
+    document.getElementById('p2p-recv-name').textContent=(sig.meta&&sig.meta.name)||'Incoming file…';
+    document.getElementById('p2p-recv-size').textContent=sig.meta?formatBytes(sig.meta.size):'';
+    statusEl.className='live-status'; statusEl.innerHTML='<span class="live-dot"></span> Connecting peer-to-peer…';
+    try{
+      const pc=new RTCPeerConnection(ICE_SERVERS); p2pConn=pc;
+      const sigRef=doc(db,'signals',code);
+      const callerCands=collection(db,'signals',code,'callerCandidates');
+      const calleeCands=collection(db,'signals',code,'calleeCandidates');
+
+      pc.onicecandidate=e=>{ if(e.candidate) addDoc(calleeCands, e.candidate.toJSON()).catch(()=>{}); };
+      pc.ondatachannel=e=>{ setupReceiveChannel(e.channel, sig.meta||{}, code); };
+      pc.onconnectionstatechange=()=>{ if(['failed','disconnected'].includes(pc.connectionState)){ statusEl.className='live-status failed'; statusEl.textContent='Connection failed — ask the sender to resend'; } };
+
+      await pc.setRemoteDescription(sig.offer);
+      const answer=await pc.createAnswer(); await pc.setLocalDescription(answer);
+      await updateDoc(sigRef,{ answer:{type:answer.type,sdp:answer.sdp} });
+
+      p2pUnsubs.push(onSnapshot(callerCands, snap=>{
+        snap.docChanges().forEach(ch=>{ if(ch.type==='added'){ try{ pc.addIceCandidate(ch.doc.data()); }catch(_){} } });
+      }));
+      showToast('Connecting to sender…','success');
+    }catch(err){ console.error(err); statusEl.className='live-status failed'; statusEl.textContent='Could not connect'; }
+  }
+
+  function setupReceiveChannel(channel, meta, code){
+    channel.binaryType='arraybuffer';
+    const statusEl=document.getElementById('p2p-recv-status');
+    const prog=document.getElementById('p2p-recv-progress');
+    const fill=document.getElementById('p2p-recv-fill');
+    const label=document.getElementById('p2p-recv-label');
+    let chunks=[], received=0;
+    let name=meta.name||'download', mime=meta.mime||'application/octet-stream', size=meta.size||0;
+    channel.onopen=()=>{ statusEl.className='live-status connected'; statusEl.textContent='⚡ Connected! Receiving…'; prog.style.display='block'; };
+    channel.onmessage=ev=>{
+      if(typeof ev.data==='string'){
+        let msg; try{ msg=JSON.parse(ev.data); }catch(_){ return; }
+        if(msg.kind==='meta'){
+          name=msg.name||name; mime=msg.mime||mime; size=msg.size||size;
+          document.getElementById('p2p-recv-name').textContent=name;
+          document.getElementById('p2p-recv-size').textContent=formatBytes(size);
+        } else if(msg.kind==='eof'){ finishReceive(); }
+        return;
+      }
+      chunks.push(ev.data); received+=ev.data.byteLength;
+      if(size){ const f=Math.min(received/size,1); fill.style.width=Math.round(f*100)+'%'; label.textContent='Receiving… '+Math.round(f*100)+'%'; }
+      else { label.textContent='Receiving… '+formatBytes(received); }
+    };
+    function finishReceive(){
+      const blob=new Blob(chunks, {type:mime});
+      const url=URL.createObjectURL(blob);
+      statusEl.className='live-status connected'; statusEl.textContent='✓ Received — '+formatBytes(received);
+      fill.style.width='100%'; label.textContent='Done';
+      const done=document.getElementById('p2p-recv-done'); done.innerHTML='';
+      const a=document.createElement('a');
+      a.href=url; a.download=name; a.className='btn-primary'; a.style.textDecoration='none'; a.style.marginTop='0';
+      a.innerHTML='⬇ Save file';
+      done.appendChild(a);
+      a.click(); // auto-trigger the browser download
+      showToast('File received!','success');
+      setTimeout(()=>cleanupP2P(code), 1500);
+    }
+  }
+
   // Expose showToast globally for history
   window.showToast = showToast;
 
   // FAQ toggle
-  window.toggleFaq = function(el) { el.classList.toggle('open'); }
+  window.toggleFaq = function(el) { el.classList.toggle('open'); };
+
+  // ---- Auto-fill retrieve code from ?code= (QR scan / shared link) ----
+  (function handleCodeParam(){
+    const c = (new URLSearchParams(location.search).get('code')||'').replace(/\D/g,'').slice(0,6);
+    if(c.length===6){
+      const retrieveTab = document.querySelectorAll('.tabs')[0].querySelectorAll('.tab')[1];
+      switchTab('retrieve', retrieveTab);
+      c.split('').forEach((d,i)=>{ if(codeInputs[i]) codeInputs[i].value=d; });
+      history.replaceState(null,'',location.pathname); // keep code out of history / avoid re-trigger on refresh
+      setTimeout(()=>retrieveContent(),400);
+    }
+  })();
+
+  // ---- Paste an image straight from the clipboard (Ctrl/Cmd+V) ----
+  document.addEventListener('paste', e=>{
+    if(!document.getElementById('panel-send').classList.contains('active')) return;
+    const items = (e.clipboardData && e.clipboardData.items) || [];
+    for(const it of items){
+      if(it.type && it.type.startsWith('image/')){
+        const blob = it.getAsFile();
+        if(blob){
+          e.preventDefault();
+          switchType('image', document.getElementById('type-image'));
+          handleImageFile(blob);
+          showToast('Image pasted from clipboard','success');
+        }
+        return;
+      }
+    }
+  });
+
+  // ---- PWA: register service worker for offline shell + installability ----
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
+  }
 </script>
 </body>
 </html>
