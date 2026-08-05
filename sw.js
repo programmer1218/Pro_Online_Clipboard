@@ -4,7 +4,7 @@
      - Same-origin static assets: cache-first, revalidate in background.
      - Cross-origin (Firebase, Google Fonts, gstatic, ads): always network — never cached.
    Bump CACHE_VERSION on any asset change to invalidate old caches. */
-const CACHE_VERSION = 'clip-v1';
+const CACHE_VERSION = 'clip-v2';
 const SHELL = [
   '/',
   '/index.html',

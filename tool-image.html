@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Converter, Compressor & Resizer — JPG, PNG, WebP | Online Clipboard</title>
+<meta name="description" content="Free browser-based image tool: convert between JPG, PNG and WebP, compress to a smaller size, and resize dimensions. Everything runs on your device — nothing is uploaded.">
+<link rel="canonical" href="https://bestonlineclipboard.com/tool-image.html"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8440166327365432" crossorigin="anonymous"></script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="index.html"><div class="logo-icon">📋</div><div class="logo-text">clip<span>board</span></div></a>
+    <div class="header-right">
+      <a class="back-link" href="tools.html" style="margin:0">← All tools</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </header>
+
+  <h1>Image <em>Converter</em>, Compressor &amp; Resizer</h1>
+  <p class="lede">Convert between JPG, PNG and WebP, shrink the file size, or change the dimensions — all in your browser. Your image never leaves your device.</p>
+
+  <div class="card">
+    <div class="card-title">Choose an image</div>
+    <div class="dropzone" id="drop" onclick="document.getElementById('file').click()">
+      <p>Drop an image here or <span>click to browse</span></p>
+      <p style="font-size:12px;margin-top:4px;">JPG, PNG, WebP, GIF, BMP</p>
+      <input type="file" id="file" accept="image/*">
+    </div>
+
+    <div id="opts" style="display:none;">
+      <div class="row">
+        <div>
+          <label class="fld">Output format</label>
+          <select id="fmt">
+            <option value="image/jpeg">JPG</option>
+            <option value="image/png">PNG</option>
+            <option value="image/webp">WebP</option>
+          </select>
+        </div>
+        <div>
+          <label class="fld">Quality <span class="range-val" id="qval">85%</span></label>
+          <input type="range" id="quality" min="10" max="100" value="85">
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label class="fld">Max width (px, optional)</label>
+          <input type="number" id="maxw" placeholder="e.g. 1920" min="1">
+        </div>
+        <div>
+          <label class="fld">Max height (px, optional)</label>
+          <input type="number" id="maxh" placeholder="e.g. 1080" min="1">
+        </div>
+      </div>
+      <button class="btn" id="go" onclick="process()">✨ Convert / Compress</button>
+    </div>
+
+    <div class="result" id="result">
+      <img id="outimg" alt="result preview">
+      <div class="meta" id="meta"></div>
+      <div class="btn-row">
+        <a class="btn" id="dl" download>⬇ Download</a>
+      </div>
+    </div>
+    <div class="note">💡 PNG ignores the quality slider (it is lossless). Use JPG or WebP for the smallest files. Leave width/height empty to keep the original size.</div>
+  </div>
+
+  <footer>
+    &copy; 2026 Online Clipboard &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="tools.html">Tools</a> &nbsp;|&nbsp; <a href="blog.html">Blog</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  // Theme (shared with the main app via localStorage)
+  const savedTheme = localStorage.getItem('clipTheme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  function toggleTheme(){
+    const d = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', d ? 'light' : 'dark');
+    document.getElementById('themeBtn').textContent = d ? '☀️' : '🌙';
+    localStorage.setItem('clipTheme', d ? 'light' : 'dark');
+  }
+  function toast(m,t){const el=document.getElementById('toast');el.textContent=m;el.className='toast show'+(t?' '+t:'');setTimeout(()=>el.className='toast',3000);}
+  function fmtBytes(b){if(b<1024)return b+' B';if(b<1048576)return (b/1024).toFixed(1)+' KB';return (b/1048576).toFixed(2)+' MB';}
+
+  let img=null, srcName='image', srcSize=0;
+  const drop=document.getElementById('drop'), fileIn=document.getElementById('file');
+  fileIn.addEventListener('change', e=>load(e.target.files[0]));
+  drop.addEventListener('dragover', e=>{e.preventDefault();drop.classList.add('drag');});
+  drop.addEventListener('dragleave', ()=>drop.classList.remove('drag'));
+  drop.addEventListener('drop', e=>{e.preventDefault();drop.classList.remove('drag');load(e.dataTransfer.files[0]);});
+  document.getElementById('quality').addEventListener('input', function(){document.getElementById('qval').textContent=this.value+'%';});
+
+  function load(f){
+    if(!f) return;
+    if(!f.type.startsWith('image/')){ toast('Please choose an image file','error'); return; }
+    srcName = f.name.replace(/\.[^.]+$/,'') || 'image';
+    srcSize = f.size;
+    const r = new FileReader();
+    r.onload = e => { img = new Image(); img.onload = ()=>{ document.getElementById('opts').style.display='block'; toast('Loaded — pick a format and convert','success'); }; img.src = e.target.result; };
+    r.readAsDataURL(f);
+  }
+
+  function process(){
+    if(!img){ toast('Load an image first','error'); return; }
+    let w=img.naturalWidth, h=img.naturalHeight;
+    const maxw=parseInt(document.getElementById('maxw').value)||0, maxh=parseInt(document.getElementById('maxh').value)||0;
+    if(maxw && w>maxw){ h=Math.round(h*maxw/w); w=maxw; }
+    if(maxh && h>maxh){ w=Math.round(w*maxh/h); h=maxh; }
+    const c=document.createElement('canvas'); c.width=w; c.height=h;
+    const ctx=c.getContext('2d');
+    const fmt=document.getElementById('fmt').value;
+    if(fmt==='image/jpeg'){ ctx.fillStyle='#fff'; ctx.fillRect(0,0,w,h); } // flatten transparency for JPG
+    ctx.drawImage(img,0,0,w,h);
+    const q=parseInt(document.getElementById('quality').value)/100;
+    c.toBlob(blob=>{
+      if(!blob){ toast('Conversion failed','error'); return; }
+      const url=URL.createObjectURL(blob);
+      const ext=fmt==='image/jpeg'?'jpg':fmt==='image/webp'?'webp':'png';
+      document.getElementById('outimg').src=url;
+      const dl=document.getElementById('dl'); dl.href=url; dl.download=srcName+'.'+ext;
+      const pct = srcSize? Math.round((1-blob.size/srcSize)*100) : 0;
+      document.getElementById('meta').innerHTML=`<b>${w}×${h}</b> · ${ext.toUpperCase()} · <b>${fmtBytes(blob.size)}</b>` + (srcSize?` <span style="color:${pct>=0?'var(--success)':'var(--warn)'}">(${pct>=0?'−'+pct:'+'+Math.abs(pct)}% vs original ${fmtBytes(srcSize)})</span>`:'');
+      document.getElementById('result').classList.add('show');
+      toast('Done!','success');
+    }, fmt, q);
+  }
+</script>
+</body>
+</html>

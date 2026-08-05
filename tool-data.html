@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSV to Excel to JSON Converter — XLSX, XLSB, CSV | Online Clipboard</title>
+<meta name="description" content="Free browser-based spreadsheet converter: turn CSV into Excel (XLSX), Excel into CSV or JSON, and JSON into a spreadsheet. Reads XLSX, XLS, XLSB and CSV. Nothing is uploaded — it all runs on your device.">
+<link rel="canonical" href="https://bestonlineclipboard.com/tool-data.html"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8440166327365432" crossorigin="anonymous"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="index.html"><div class="logo-icon">📋</div><div class="logo-text">clip<span>board</span></div></a>
+    <div class="header-right">
+      <a class="back-link" href="tools.html" style="margin:0">← All tools</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </header>
+
+  <h1>CSV ↔ Excel ↔ <em>JSON</em> Converter</h1>
+  <p class="lede">Convert spreadsheets between CSV, Excel (XLSX) and JSON right in your browser. Reads XLSX, XLS, XLSB and CSV files. Your data is never uploaded.</p>
+
+  <div class="card">
+    <div class="card-title">Choose a file</div>
+    <div class="dropzone" id="drop" onclick="document.getElementById('file').click()">
+      <p>Drop a spreadsheet here or <span>click to browse</span></p>
+      <p style="font-size:12px;margin-top:4px;">CSV, XLSX, XLS, XLSB, JSON</p>
+      <input type="file" id="file" accept=".csv,.xlsx,.xls,.xlsb,.json,.txt">
+    </div>
+
+    <div id="opts" style="display:none;">
+      <label class="fld">Convert to</label>
+      <select id="fmt">
+        <option value="xlsx">Excel (.xlsx)</option>
+        <option value="csv">CSV (.csv)</option>
+        <option value="json">JSON (.json)</option>
+      </select>
+      <button class="btn" id="go" onclick="convert()">🔄 Convert</button>
+    </div>
+
+    <div class="result" id="result">
+      <div class="meta" id="meta"></div>
+      <div class="btn-row"><a class="btn" id="dl" download>⬇ Download</a></div>
+    </div>
+    <div class="note">💡 XLSB and XLS are read-only inputs — output is XLSX, CSV or JSON. Only the first sheet is converted for CSV/JSON.</div>
+  </div>
+
+  <footer>
+    &copy; 2026 Online Clipboard &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="tools.html">Tools</a> &nbsp;|&nbsp; <a href="blog.html">Blog</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  const savedTheme = localStorage.getItem('clipTheme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  function toggleTheme(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';localStorage.setItem('clipTheme',d?'light':'dark');}
+  function toast(m,t){const el=document.getElementById('toast');el.textContent=m;el.className='toast show'+(t?' '+t:'');setTimeout(()=>el.className='toast',3000);}
+
+  let wb=null, baseName='data';
+  const drop=document.getElementById('drop'), fileIn=document.getElementById('file');
+  fileIn.addEventListener('change', e=>load(e.target.files[0]));
+  drop.addEventListener('dragover', e=>{e.preventDefault();drop.classList.add('drag');});
+  drop.addEventListener('dragleave', ()=>drop.classList.remove('drag'));
+  drop.addEventListener('drop', e=>{e.preventDefault();drop.classList.remove('drag');load(e.dataTransfer.files[0]);});
+
+  function load(f){
+    if(!f) return;
+    baseName = f.name.replace(/\.[^.]+$/,'') || 'data';
+    const r=new FileReader();
+    r.onload=e=>{
+      try{
+        if(/\.json$/i.test(f.name)){
+          let arr=JSON.parse(e.target.result);
+          if(!Array.isArray(arr)) arr=[arr];
+          const ws=XLSX.utils.json_to_sheet(arr);
+          wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Sheet1');
+        } else {
+          wb=XLSX.read(e.target.result,{type:'array'});
+        }
+        document.getElementById('opts').style.display='block';
+        toast('Loaded '+wb.SheetNames.length+' sheet(s)','success');
+      }catch(err){ console.error(err); toast('Could not read that file','error'); }
+    };
+    if(/\.json$/i.test(f.name)) r.readAsText(f); else r.readAsArrayBuffer(f);
+  }
+
+  function convert(){
+    if(!wb){ toast('Load a file first','error'); return; }
+    const fmt=document.getElementById('fmt').value;
+    const first=wb.Sheets[wb.SheetNames[0]];
+    let blob, ext=fmt;
+    try{
+      if(fmt==='xlsx'){
+        const out=XLSX.write(wb,{type:'array',bookType:'xlsx'});
+        blob=new Blob([out],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+      } else if(fmt==='csv'){
+        blob=new Blob([XLSX.utils.sheet_to_csv(first)],{type:'text/csv'});
+      } else {
+        const json=XLSX.utils.sheet_to_json(first);
+        blob=new Blob([JSON.stringify(json,null,2)],{type:'application/json'});
+      }
+      const url=URL.createObjectURL(blob);
+      const dl=document.getElementById('dl'); dl.href=url; dl.download=baseName+'.'+ext;
+      document.getElementById('meta').innerHTML=`Ready: <b>${baseName}.${ext}</b> · ${(blob.size/1024).toFixed(1)} KB`;
+      document.getElementById('result').classList.add('show');
+      toast('Converted!','success');
+    }catch(err){ console.error(err); toast('Conversion failed','error'); }
+  }
+</script>
+</body>
+</html>

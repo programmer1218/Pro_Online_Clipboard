@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOCX & TXT Converter — Word to Text, HTML, PDF | Online Clipboard</title>
+<meta name="description" content="Free browser-based document converter: turn a Word (.docx) file into plain text, HTML or PDF, and convert plain text to PDF. Runs entirely on your device — nothing is uploaded.">
+<link rel="canonical" href="https://bestonlineclipboard.com/tool-docx.html"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8440166327365432" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="index.html"><div class="logo-icon">📋</div><div class="logo-text">clip<span>board</span></div></a>
+    <div class="header-right">
+      <a class="back-link" href="tools.html" style="margin:0">← All tools</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </header>
+
+  <h1>Document <em>Converter</em></h1>
+  <p class="lede">Convert a Word (.docx) file to plain text, HTML or PDF — or turn plain text into a PDF. All in your browser, nothing uploaded.</p>
+
+  <div class="card">
+    <div class="card-title">Choose a document</div>
+    <div class="dropzone" id="drop" onclick="document.getElementById('file').click()">
+      <p>Drop a .docx or .txt here or <span>click to browse</span></p>
+      <p style="font-size:12px;margin-top:4px;">DOCX, TXT</p>
+      <input type="file" id="file" accept=".docx,.txt">
+    </div>
+
+    <div id="opts" style="display:none;">
+      <label class="fld">Convert to</label>
+      <select id="fmt">
+        <option value="txt">Plain text (.txt)</option>
+        <option value="html">HTML (.html)</option>
+        <option value="pdf">PDF (.pdf)</option>
+      </select>
+      <button class="btn" id="go" onclick="convert()">🔄 Convert</button>
+    </div>
+
+    <div class="result" id="result">
+      <div id="preview"></div>
+      <div class="btn-row"><a class="btn" id="dl" download>⬇ Download</a></div>
+    </div>
+    <div class="note">💡 DOCX conversion keeps text, headings and lists. Complex layouts, images and exact fonts may not carry over — that needs a full Office renderer, which no browser-only tool can do perfectly.</div>
+  </div>
+
+  <footer>
+    &copy; 2026 Online Clipboard &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="tools.html">Tools</a> &nbsp;|&nbsp; <a href="blog.html">Blog</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  const savedTheme = localStorage.getItem('clipTheme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  function toggleTheme(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';localStorage.setItem('clipTheme',d?'light':'dark');}
+  function toast(m,t){const el=document.getElementById('toast');el.textContent=m;el.className='toast show'+(t?' '+t:'');setTimeout(()=>el.className='toast',3000);}
+
+  let html='', text='', baseName='document';
+  const drop=document.getElementById('drop'), fileIn=document.getElementById('file');
+  fileIn.addEventListener('change', e=>load(e.target.files[0]));
+  drop.addEventListener('dragover', e=>{e.preventDefault();drop.classList.add('drag');});
+  drop.addEventListener('dragleave', ()=>drop.classList.remove('drag'));
+  drop.addEventListener('drop', e=>{e.preventDefault();drop.classList.remove('drag');load(e.dataTransfer.files[0]);});
+
+  async function load(f){
+    if(!f) return;
+    baseName=f.name.replace(/\.[^.]+$/,'')||'document';
+    try{
+      if(/\.docx$/i.test(f.name)){
+        const buf=await f.arrayBuffer();
+        const r=await mammoth.convertToHtml({arrayBuffer:buf});
+        html=r.value;
+        const t=await mammoth.extractRawText({arrayBuffer:buf});
+        text=t.value;
+      } else {
+        text=await f.text();
+        html='<pre style="white-space:pre-wrap;font-family:inherit">'+text.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</pre>';
+      }
+      document.getElementById('opts').style.display='block';
+      toast('Loaded — pick an output format','success');
+    }catch(err){ console.error(err); toast('Could not read that document','error'); }
+  }
+
+  function convert(){
+    if(!text && !html){ toast('Load a document first','error'); return; }
+    const fmt=document.getElementById('fmt').value;
+    const prev=document.getElementById('preview'), dl=document.getElementById('dl');
+    let blob, ext=fmt;
+    if(fmt==='txt'){
+      blob=new Blob([text],{type:'text/plain'});
+      prev.innerHTML='<textarea readonly style="min-height:220px">'+text.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</textarea>';
+    } else if(fmt==='html'){
+      const doc='<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+baseName+'</title></head><body>'+html+'</body></html>';
+      blob=new Blob([doc],{type:'text/html'});
+      prev.innerHTML='<div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;max-height:300px;overflow:auto">'+html+'</div>';
+    } else {
+      const {jsPDF}=window.jspdf; const pdf=new jsPDF({unit:'pt',format:'a4'});
+      pdf.setFontSize(11);
+      const lines=pdf.splitTextToSize(text||' ', 500);
+      let y=54; lines.forEach(l=>{ if(y>790){pdf.addPage();y=54;} pdf.text(l,48,y); y+=16; });
+      blob=pdf.output('blob');
+      prev.innerHTML='<div class="meta">PDF ready — <b>'+lines.length+'</b> lines across '+pdf.getNumberOfPages()+' page(s).</div>';
+    }
+    dl.href=URL.createObjectURL(blob); dl.download=baseName+'.'+ext;
+    document.getElementById('result').classList.add('show');
+    toast('Converted!','success');
+  }
+</script>
+</body>
+</html>

@@ -245,6 +245,153 @@ textarea::placeholder{color:var(--muted)}
 .p2p-recv.show{display:block}
 .p2p-recv .recv-file{display:flex;align-items:center;gap:12px;font-size:14px;margin-bottom:12px}
 .p2p-recv .recv-file svg{width:22px;height:22px;color:var(--accent2);flex-shrink:0}
+/* QR scanner */
+.scan-btn{display:none;width:100%;margin-top:10px;background:var(--surface2);border:1px solid var(--border2);color:var(--accent2);padding:11px;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;align-items:center;justify-content:center;gap:8px}
+.scan-btn:hover{border-color:var(--accent)}
+.scanner-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px}
+.scanner-overlay.show{display:flex}
+.scanner-box{position:relative;width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:16px}
+#scanner-video{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:18px;background:#000;border:2px solid var(--accent2)}
+.scanner-hint{color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;text-align:center}
+.scanner-close{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:11px 22px;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500}
+
+/* ============ UI ENHANCEMENT PASS ============ */
+/* Aurora mesh background — dark */
+[data-theme="dark"] body::after{
+  content:'';position:fixed;inset:0;top:0;left:0;width:auto;height:auto;transform:none;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(45% 38% at 15% 0%, rgba(108,99,255,0.20), transparent 70%),
+    radial-gradient(42% 34% at 88% 8%, rgba(167,139,250,0.16), transparent 70%),
+    radial-gradient(46% 42% at 50% 108%, rgba(96,165,250,0.12), transparent 70%);
+  animation:auroraDrift 20s ease-in-out infinite alternate;
+}
+/* Aurora mesh background — light */
+[data-theme="light"] body{background:linear-gradient(180deg,#f6f7ff 0%,#eceffc 100%)}
+[data-theme="light"] body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(45% 38% at 15% 0%, rgba(108,99,255,0.12), transparent 70%),
+    radial-gradient(42% 34% at 88% 8%, rgba(167,139,250,0.12), transparent 70%),
+    radial-gradient(46% 42% at 50% 108%, rgba(96,165,250,0.10), transparent 70%);
+  animation:auroraDrift 20s ease-in-out infinite alternate;
+}
+@keyframes auroraDrift{from{transform:translateY(0) scale(1)}to{transform:translateY(-2.5%) scale(1.06)}}
+
+/* Light-theme card depth */
+[data-theme="light"] .card,[data-theme="light"] .feature,[data-theme="light"] .info-card,[data-theme="light"] .how-step,[data-theme="light"] .faq-item,[data-theme="light"] .send-options,[data-theme="light"] .code-box{box-shadow:0 4px 18px -10px rgba(30,30,70,0.18)}
+
+/* Micro-interactions */
+.card,.feature,.info-card,.faq-item,.send-options,.code-box,.result-box,.p2p-recv,.how-step{transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease}
+.feature:hover,.info-card:hover,.how-step:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:0 12px 32px -14px rgba(108,99,255,0.4)}
+.card:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,99,255,0.12)}
+.btn-primary{box-shadow:0 8px 24px -10px rgba(108,99,255,0.65)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 30px -10px rgba(108,99,255,0.8)}
+.tab{transition:all .22s ease}
+.code-copy,.share-btn,.history-copy,.file-remove{transition:all .18s ease}
+
+/* Hero title shimmer */
+.hero h1 em{background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:heroShimmer 7s linear infinite}
+@keyframes heroShimmer{to{background-position:200% center}}
+
+/* Entrance animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:fadeUp .6s ease backwards}
+.wrap > .tabs{animation:fadeUp .6s ease .08s backwards}
+.panel.active{animation:fadeUp .45s ease backwards}
+
+/* How it works */
+.how-it-works{margin-top:48px}
+.how-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;text-align:center;margin-bottom:28px;letter-spacing:-0.5px}
+.how-title span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:600px){.how-steps{grid-template-columns:1fr}}
+.how-step{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px 18px 20px;text-align:center}
+.how-num{position:absolute;top:-13px;left:50%;transform:translateX(-50%);width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px -4px rgba(108,99,255,0.6)}
+.how-ic{font-size:30px;margin:4px 0 10px}
+.how-step h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}
+.how-step p{font-size:13px;color:var(--muted);line-height:1.55}
+/* Header Tools button */
+.nav-tools{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:7px 14px;border-radius:20px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;text-decoration:none;box-shadow:0 6px 16px -6px rgba(108,99,255,0.7);white-space:nowrap}
+.nav-tools:hover{opacity:.92;transform:translateY(-1px)}
+@media(max-width:480px){.badge{display:none}}
+/* Free Tools showcase (homepage) */
+.tools-promo{margin-top:36px;padding:26px 24px;border-radius:20px;border:1px solid rgba(108,99,255,0.3);background:linear-gradient(135deg,rgba(108,99,255,0.14),rgba(167,139,250,0.05));position:relative;overflow:hidden}
+.tools-promo::before{content:'';position:absolute;top:-45%;right:-10%;width:320px;height:320px;background:radial-gradient(circle,rgba(108,99,255,0.22),transparent 70%);pointer-events:none}
+.tools-promo-head{text-align:center;margin-bottom:20px;position:relative}
+.tp-title{font-family:'Syne',sans-serif;font-size:clamp(22px,4.5vw,28px);font-weight:800;letter-spacing:-0.5px}
+.tp-title span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.tp-sub{color:var(--muted);font-size:14px;margin-top:6px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6}
+.tools-promo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative}
+@media(max-width:560px){.tools-promo-grid{grid-template-columns:repeat(2,1fr)}}
+.tp-card{display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;padding:20px 10px;border-radius:14px;background:var(--surface);border:1px solid var(--border);text-decoration:none;color:var(--text);transition:transform .2s,border-color .2s,box-shadow .2s}
+.tp-card:hover{transform:translateY(-3px);border-color:var(--accent2);box-shadow:0 14px 32px -12px rgba(108,99,255,0.5)}
+.tp-ic{font-size:30px}
+.tp-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;line-height:1.25}
+.tp-all{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none}
+.tp-all .tp-name,.tp-all .tp-ic{color:#fff}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce){
+  body::after,.hero h1 em,.hero,.panel.active,.wrap>.tabs{animation:none}
+  .card,.feature,.info-card,.faq-item,.how-step,.btn-primary{transition:none}
+  .btn-primary:hover::after{animation:none}
+}
+
+/* ============ PREMIUM GLASS PASS ============ */
+/* Frosted-glass surfaces — the content floats over the aurora */
+[data-theme="dark"] .card,[data-theme="dark"] .send-options,[data-theme="dark"] .code-box,[data-theme="dark"] .feature,[data-theme="dark"] .info-card,[data-theme="dark"] .how-step,[data-theme="dark"] .faq-item,[data-theme="dark"] .result-box,[data-theme="dark"] .p2p-recv,[data-theme="dark"] .tabs{
+  background:rgba(22,22,34,0.55);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-color:rgba(255,255,255,0.09);
+}
+[data-theme="light"] .card,[data-theme="light"] .send-options,[data-theme="light"] .code-box,[data-theme="light"] .feature,[data-theme="light"] .info-card,[data-theme="light"] .how-step,[data-theme="light"] .faq-item,[data-theme="light"] .result-box,[data-theme="light"] .p2p-recv,[data-theme="light"] .tabs{
+  background:rgba(255,255,255,0.62);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-color:rgba(255,255,255,0.5);
+}
+
+/* The code box is the hero moment — give it a soft halo */
+.code-box{box-shadow:0 24px 70px -24px rgba(108,99,255,0.55)}
+
+/* Glowing, bevelled code digits */
+.code-digit{
+  background:linear-gradient(160deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+  backdrop-filter:blur(6px);
+  box-shadow:0 8px 22px -8px rgba(108,99,255,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+/* Premium tab switcher — active gets a gradient pill + glow */
+.tab.active{
+  background:linear-gradient(135deg, rgba(108,99,255,0.22), rgba(167,139,250,0.12));
+  border:1px solid rgba(108,99,255,0.4);
+  box-shadow:0 6px 18px -8px rgba(108,99,255,0.6), inset 0 1px 0 rgba(255,255,255,0.12);
+  color:var(--text);
+}
+
+/* Primary button — stronger gradient, glow, and a moving sheen on hover */
+.btn-primary{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--accent),#8b5cf6 55%,var(--accent2));box-shadow:0 10px 30px -10px rgba(108,99,255,0.7), inset 0 1px 0 rgba(255,255,255,0.2)}
+.btn-primary::after{content:'';position:absolute;top:0;left:-130%;width:55%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);transform:skewX(-20deg);pointer-events:none}
+.btn-primary:hover::after{animation:sheen .85s ease}
+@keyframes sheen{to{left:140%}}
+
+/* Logo lift */
+.logo-icon{box-shadow:0 8px 20px -6px rgba(108,99,255,0.7)}
+
+/* Premium scrollbar */
+*{scrollbar-width:thin;scrollbar-color:var(--accent) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--accent),var(--accent2));border-radius:10px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(var(--accent2),var(--accent));background-clip:padding-box}
+::-webkit-scrollbar-track{background:transparent}
+
+/* Branded text selection */
+::selection{background:rgba(108,99,255,0.35);color:#fff}
+
+/* Typography refinement */
+.hero h1{letter-spacing:-1.5px;font-size:clamp(32px,5.4vw,52px)}
+.hero p{letter-spacing:0.1px}
 </style>
 </head>
 <body>
@@ -260,6 +407,7 @@ textarea::placeholder{color:var(--muted)}
       <div class="logo-text">clip<span>board</span></div>
     </div>
     <div class="header-right">
+      <a class="nav-tools" href="tools.html">🧰 Tools</a>
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
       <span class="badge">Free · No signup</span>
     </div>
@@ -417,6 +565,10 @@ textarea::placeholder{color:var(--muted)}
         <input class="code-input" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" oninput="moveNext(this,4)" onkeydown="movePrev(event,4)"/>
         <input class="code-input" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" oninput="moveNext(this,5)" onkeydown="movePrev(event,5)"/>
       </div>
+      <button type="button" class="scan-btn" id="scan-qr-btn" onclick="openScanner()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+        Scan QR code
+      </button>
       <div class="opt-field" id="retrieve-pass-field" style="display:none;margin-top:4px;">
         <label>🔒 This clip is password-protected</label>
         <input class="opt-input" id="retrieve-password" type="password" autocomplete="off" placeholder="Enter the password to unlock"/>
@@ -452,6 +604,32 @@ textarea::placeholder{color:var(--muted)}
     <div class="feature"><div class="feature-icon">📱</div><h3>Cross-device</h3><p>Phone to laptop, Mac to Windows — just enter the 6-digit code.</p></div>
   </div>
 
+  <!-- FREE TOOLS SHOWCASE -->
+  <div class="tools-promo">
+    <div class="tools-promo-head">
+      <div class="tp-title">More <span>free tools</span> 🧰</div>
+      <div class="tp-sub">Convert &amp; compress images, PDFs, spreadsheets, documents and video — all private, right in your browser. No signup, no upload.</div>
+    </div>
+    <div class="tools-promo-grid">
+      <a href="tool-image.html" class="tp-card"><span class="tp-ic">🖼️</span><span class="tp-name">Image Converter</span></a>
+      <a href="tool-pdf.html" class="tp-card"><span class="tp-ic">📄</span><span class="tp-name">PDF Toolkit</span></a>
+      <a href="tool-data.html" class="tp-card"><span class="tp-ic">📊</span><span class="tp-name">CSV · Excel · JSON</span></a>
+      <a href="tool-docx.html" class="tp-card"><span class="tp-ic">📝</span><span class="tp-name">Doc Converter</span></a>
+      <a href="tool-video.html" class="tp-card"><span class="tp-ic">🎬</span><span class="tp-name">Video Converter</span></a>
+      <a href="tools.html" class="tp-card tp-all"><span class="tp-ic">✨</span><span class="tp-name">See all tools →</span></a>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-it-works">
+    <div class="how-title">How it <span>works</span></div>
+    <div class="how-steps">
+      <div class="how-step"><div class="how-num">1</div><div class="how-ic">📋</div><h4>Paste or drop</h4><p>Add text, an image, or a file on one device.</p></div>
+      <div class="how-step"><div class="how-num">2</div><div class="how-ic">🔢</div><h4>Get a code</h4><p>You instantly get a 6-digit code and a QR.</p></div>
+      <div class="how-step"><div class="how-num">3</div><div class="how-ic">📲</div><h4>Retrieve anywhere</h4><p>Enter the code on any other device — done.</p></div>
+    </div>
+  </div>
+
   <!-- CONTENT SECTION -->
   <div class="info-section">
     <h2>What Is Online Clipboard?</h2>
@@ -471,6 +649,7 @@ textarea::placeholder{color:var(--muted)}
       <div class="info-card"><h3>💡 10 Smart Tips</h3><p>Clever, non-obvious ways to use Online Clipboard beyond the basics — from password handoff to classroom sharing. <a href="tips.html">See the tips →</a></p></div>
       <div class="info-card"><h3>👥 Who Uses It</h3><p>How students, developers, designers, and remote workers each use the tool differently. <a href="use-cases.html">See use cases →</a></p></div>
       <div class="info-card"><h3>📰 Blog</h3><p>Longer articles on cross-device workflows, digital privacy, and productivity. <a href="blog.html">Visit the blog →</a></p></div>
+      <div class="info-card"><h3>🧰 Free Tools</h3><p>Convert and compress images, PDFs, spreadsheets, documents and videos — all privately in your browser. <a href="tools.html">Open the tools →</a></p></div>
     </div>
   </div>
 
@@ -519,6 +698,7 @@ textarea::placeholder{color:var(--muted)}
 
   <div class="site-footer">
     &copy; 2026 Online Clipboard &nbsp;|&nbsp;
+    <a href="tools.html">Tools</a> &nbsp;|&nbsp;
     <a href="about.html">About</a> &nbsp;|&nbsp;
     <a href="how-to-use.html">How to Use</a> &nbsp;|&nbsp;
     <a href="tips.html">Tips</a> &nbsp;|&nbsp;
@@ -527,6 +707,14 @@ textarea::placeholder{color:var(--muted)}
     <a href="contact.html">Contact</a> &nbsp;|&nbsp;
     <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp;
     <a href="terms.html">Terms</a>
+  </div>
+</div>
+
+<div class="scanner-overlay" id="scanner-overlay">
+  <div class="scanner-box">
+    <video id="scanner-video" playsinline muted></video>
+    <div class="scanner-hint">Point your camera at the sender's QR code</div>
+    <button class="scanner-close" onclick="closeScanner()">✕ Close</button>
   </div>
 </div>
 
@@ -953,12 +1141,25 @@ textarea::placeholder{color:var(--muted)}
       if(payload.type==='text'){
         resultContent.innerHTML=`<div class="result-text">${escHtml(data)}</div>`;
         copyBtn.style.display='block';
+        // If the whole content is a single link, offer a one-tap "Open link" button.
+        if(/^https?:\/\/\S+$/i.test(data.trim())){
+          const a=document.createElement('a');
+          a.href=data.trim(); a.target='_blank'; a.rel='noopener noreferrer';
+          a.className='btn-primary'; a.style.marginTop='10px'; a.style.textDecoration='none';
+          a.textContent='🔗 Open link';
+          resultContent.appendChild(a);
+        }
       } else if(payload.type==='image'){
         resultContent.innerHTML=`<div class="result-img"><img src="${data}" alt="shared image"/></div>`;
         copyBtn.style.display='none';
         resultContent.innerHTML+=`<button onclick="downloadImage()" style="margin-top:10px;background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 18px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download Image</button>`;
       } else if(payload.type==='file'){
-        resultContent.innerHTML=`<div class="result-file"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div style="flex:1"><div style="font-size:14px;font-weight:500;">${escHtml(payload.name)}</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">${formatBytes(payload.size)}</div></div><button onclick="downloadFile()" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download</button></div>`;
+        // Inline preview for images and PDFs so the receiver can peek before downloading.
+        const mime=payload.mime||'';
+        let preview='';
+        if(mime.startsWith('image/')) preview=`<div class="img-preview" style="margin-bottom:12px;"><img src="${data}" alt="preview"/></div>`;
+        else if(mime==='application/pdf') preview=`<iframe src="${data}" title="PDF preview" style="width:100%;height:300px;border:1px solid var(--border);border-radius:10px;margin-bottom:12px;background:#fff;"></iframe>`;
+        resultContent.innerHTML=preview+`<div class="result-file"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div style="flex:1"><div style="font-size:14px;font-weight:500;">${escHtml(payload.name)}</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">${formatBytes(payload.size)}</div></div><button onclick="downloadFile()" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.25);color:var(--accent2);font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;">⬇ Download</button></div>`;
         copyBtn.style.display='none';
       }
       // Read-receipt: notify the sender their clip was opened (best-effort, non-blocking).
@@ -1233,6 +1434,62 @@ textarea::placeholder{color:var(--muted)}
   if('serviceWorker' in navigator){
     window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
   }
+
+  // ---- PWA Share Target: text/link shared from another app pre-fills the Send box ----
+  (function handleShareTarget(){
+    const p=new URLSearchParams(location.search);
+    const shared=[p.get('title'),p.get('text'),p.get('url')].filter(Boolean).join('\n').trim();
+    if(shared){
+      const ta=document.getElementById('text-input');
+      ta.value=shared;
+      document.getElementById('char-count').textContent=shared.length.toLocaleString()+' characters';
+      history.replaceState(null,'',location.pathname);
+      showToast('Shared content ready — hit Send','success');
+    }
+  })();
+
+  // ---- In-app QR scanner (uses the native BarcodeDetector where available) ----
+  let scanStream=null, scanTimer=null, scanDetector=null;
+  async function openScanner(){
+    if(!('BarcodeDetector' in window)){ showToast('Scanner not supported here — use your phone camera on the QR','error'); return; }
+    const video=document.getElementById('scanner-video');
+    try{
+      scanStream=await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment' } });
+      video.srcObject=scanStream; await video.play();
+      document.getElementById('scanner-overlay').classList.add('show');
+      scanDetector=new BarcodeDetector({ formats:['qr_code'] });
+      scanTick();
+    }catch(e){ showToast('Camera access denied','error'); closeScanner(); }
+  }
+  async function scanTick(){
+    if(!scanStream) return;
+    try{
+      const codes=await scanDetector.detect(document.getElementById('scanner-video'));
+      if(codes && codes.length){
+        const raw=codes[0].rawValue||'';
+        let code='';
+        try{ code=(new URL(raw).searchParams.get('code')||'').replace(/\D/g,'').slice(0,6); }catch(_){}
+        if(code.length!==6){ const m=raw.match(/\d{6}/); if(m) code=m[0]; }
+        if(code.length===6){
+          closeScanner();
+          const ci=document.querySelectorAll('.code-input');
+          code.split('').forEach((d,i)=>{ if(ci[i]) ci[i].value=d; });
+          showToast('QR scanned!','success');
+          setTimeout(()=>retrieveContent(),200);
+          return;
+        }
+      }
+    }catch(_){}
+    scanTimer=setTimeout(scanTick,250);
+  }
+  function closeScanner(){
+    if(scanTimer){ clearTimeout(scanTimer); scanTimer=null; }
+    if(scanStream){ scanStream.getTracks().forEach(t=>t.stop()); scanStream=null; }
+    document.getElementById('scanner-overlay').classList.remove('show');
+  }
+  window.openScanner=openScanner; window.closeScanner=closeScanner;
+  // Only surface the Scan button on browsers that can actually decode QR codes.
+  if('BarcodeDetector' in window){ document.getElementById('scan-qr-btn').style.display='flex'; }
 </script>
 </body>
 </html>

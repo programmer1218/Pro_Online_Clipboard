@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Converter & Compressor — MP4, WebM, GIF | Online Clipboard</title>
+<meta name="description" content="Free browser-based video tool: convert between MP4, WebM and GIF, compress the file size, and change the resolution. Runs on your device with WebAssembly — nothing is uploaded. Best for short clips.">
+<link rel="canonical" href="https://bestonlineclipboard.com/tool-video.html"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8440166327365432" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="index.html"><div class="logo-icon">📋</div><div class="logo-text">clip<span>board</span></div></a>
+    <div class="header-right">
+      <a class="back-link" href="tools.html" style="margin:0">← All tools</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </header>
+
+  <h1>Video <em>Converter</em> &amp; Compressor</h1>
+  <p class="lede">Convert between MP4, WebM and GIF, shrink the size, or drop the resolution — processed privately in your browser with WebAssembly.</p>
+
+  <div class="note" style="color:var(--accent2);background:rgba(108,99,255,0.08);border-color:rgba(108,99,255,0.2)">
+    ⚙️ This runs a full video engine (FFmpeg) inside your browser. The first run downloads ~25&nbsp;MB and it is <b>slow</b> — best for <b>short clips under ~50&nbsp;MB</b>. Big files or long videos may be very slow or run out of memory. Nothing is uploaded.
+  </div>
+
+  <div class="card">
+    <div class="card-title">Choose a video</div>
+    <div class="dropzone" id="drop" onclick="document.getElementById('file').click()">
+      <p>Drop a video here or <span>click to browse</span></p>
+      <p style="font-size:12px;margin-top:4px;">MP4, WebM, MOV, AVI, MKV…</p>
+      <input type="file" id="file" accept="video/*">
+    </div>
+    <div class="filelist" id="filelist"></div>
+
+    <div id="opts" style="display:none;">
+      <div class="row">
+        <div>
+          <label class="fld">Output format</label>
+          <select id="fmt">
+            <option value="mp4">MP4 (H.264)</option>
+            <option value="webm">WebM (VP9)</option>
+            <option value="gif">GIF</option>
+          </select>
+        </div>
+        <div>
+          <label class="fld">Resolution</label>
+          <select id="res">
+            <option value="0">Keep original</option>
+            <option value="1080">1080p</option>
+            <option value="720" selected>720p</option>
+            <option value="480">480p</option>
+            <option value="360">360p</option>
+          </select>
+        </div>
+      </div>
+      <div id="crfWrap">
+        <label class="fld">Compression <span class="range-val" id="crfVal">28 (smaller ↔ better)</span></label>
+        <input type="range" id="crf" min="18" max="36" value="28">
+      </div>
+      <button class="btn" id="go" onclick="run()">🎬 Convert / Compress</button>
+    </div>
+
+    <div class="progress" id="prog"><div id="progbar"></div></div>
+    <div class="meta" id="status" style="text-align:center"></div>
+
+    <div class="result" id="result">
+      <video id="outvid" controls style="width:100%;border-radius:10px"></video>
+      <img id="outgif" alt="result" style="display:none">
+      <div class="meta" id="meta"></div>
+      <div class="btn-row"><a class="btn" id="dl" download>⬇ Download</a></div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Online Clipboard &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="tools.html">Tools</a> &nbsp;|&nbsp; <a href="blog.html">Blog</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  const savedTheme = localStorage.getItem('clipTheme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  function toggleTheme(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';localStorage.setItem('clipTheme',d?'light':'dark');}
+  function toast(m,t){const el=document.getElementById('toast');el.textContent=m;el.className='toast show'+(t?' '+t:'');setTimeout(()=>el.className='toast',3500);}
+  function fmtBytes(b){if(b<1048576)return (b/1024).toFixed(1)+' KB';return (b/1048576).toFixed(2)+' MB';}
+  function setProg(p){const el=document.getElementById('prog');el.classList.add('show');document.getElementById('progbar').style.width=Math.max(0,Math.min(100,Math.round(p*100)))+'%';}
+
+  document.getElementById('crf').addEventListener('input',function(){document.getElementById('crfVal').textContent=this.value+' (smaller ↔ better)';});
+  document.getElementById('fmt').addEventListener('change',function(){document.getElementById('crfWrap').style.display=this.value==='gif'?'none':'block';});
+
+  let file=null, ffmpeg=null, loaded=false;
+  const drop=document.getElementById('drop'), fileIn=document.getElementById('file');
+  fileIn.addEventListener('change', e=>pick(e.target.files[0]));
+  drop.addEventListener('dragover', e=>{e.preventDefault();drop.classList.add('drag');});
+  drop.addEventListener('dragleave', ()=>drop.classList.remove('drag'));
+  drop.addEventListener('drop', e=>{e.preventDefault();drop.classList.remove('drag');pick(e.dataTransfer.files[0]);});
+  function pick(f){
+    if(!f) return;
+    if(!f.type.startsWith('video/')){ toast('Please choose a video file','error'); return; }
+    file=f;
+    document.getElementById('filelist').innerHTML=`<div class="fileitem"><span class="nm">${f.name}</span><span class="meta" style="margin:0">${fmtBytes(f.size)}</span></div>`;
+    document.getElementById('opts').style.display='block';
+  }
+
+  async function ensureLoaded(){
+    if(loaded) return;
+    const {createFFmpeg}=FFmpeg;
+    ffmpeg=createFFmpeg({log:false, corePath:'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'});
+    ffmpeg.setProgress(({ratio})=>{ if(ratio>=0&&ratio<=1) setProg(ratio); });
+    document.getElementById('status').textContent='Loading video engine (~25 MB, first time only)…';
+    await ffmpeg.load();
+    loaded=true;
+    document.getElementById('status').textContent='';
+  }
+
+  async function run(){
+    if(!file){ toast('Load a video first','error'); return; }
+    const go=document.getElementById('go'); go.disabled=true; const lbl=go.textContent; go.innerHTML='<span class="spinner"></span> Processing…';
+    document.getElementById('result').classList.remove('show');
+    try{
+      await ensureLoaded();
+      const {fetchFile}=FFmpeg;
+      const inName='input'; const fmt=document.getElementById('fmt').value;
+      ffmpeg.FS('writeFile', inName, await fetchFile(file));
+      const res=parseInt(document.getElementById('res').value)||0;
+      const crf=document.getElementById('crf').value;
+      const outName='out.'+fmt;
+      let args=['-i',inName];
+      const vf = res? `scale=-2:${res}` : null;
+      if(fmt==='mp4'){ args.push('-c:v','libx264','-preset','veryfast','-crf',crf); if(vf)args.push('-vf',vf); args.push('-c:a','aac','-b:a','128k'); }
+      else if(fmt==='webm'){ args.push('-c:v','libvpx-vp9','-b:v','0','-crf',crf); if(vf)args.push('-vf',vf); args.push('-c:a','libopus'); }
+      else { const gvf = `fps=12,scale=${res||480}:-1:flags=lanczos`; args.push('-vf',gvf); }
+      args.push(outName);
+      document.getElementById('status').textContent='Encoding… (this can take a while)';
+      await ffmpeg.run(...args);
+      const data=ffmpeg.FS('readFile',outName);
+      const mime = fmt==='mp4'?'video/mp4':fmt==='webm'?'video/webm':'image/gif';
+      const blob=new Blob([data.buffer],{type:mime});
+      const url=URL.createObjectURL(blob);
+      const vid=document.getElementById('outvid'), gif=document.getElementById('outgif');
+      if(fmt==='gif'){ gif.src=url; gif.style.display='block'; vid.style.display='none'; }
+      else { vid.src=url; vid.style.display='block'; gif.style.display='none'; }
+      const dl=document.getElementById('dl'); dl.href=url; dl.download=(file.name.replace(/\.[^.]+$/,'')||'video')+'.'+fmt;
+      const pct=Math.round((1-blob.size/file.size)*100);
+      document.getElementById('meta').innerHTML=`<b>${fmtBytes(blob.size)}</b> <span style="color:${pct>=0?'var(--success)':'var(--warn)'}">(${pct>=0?'−'+pct:'+'+Math.abs(pct)}% vs ${fmtBytes(file.size)})</span>`;
+      document.getElementById('result').classList.add('show');
+      document.getElementById('status').textContent='';
+      try{ ffmpeg.FS('unlink',inName); ffmpeg.FS('unlink',outName); }catch(_){}
+      toast('Done!','success');
+    }catch(err){ console.error(err); document.getElementById('status').textContent=''; toast('Failed — the clip may be too large for the browser','error'); }
+    document.getElementById('prog').classList.remove('show'); go.disabled=false; go.textContent=lbl;
+  }
+</script>
+</body>
+</html>

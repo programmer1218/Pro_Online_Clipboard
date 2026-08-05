@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Toolkit — Images to PDF, PDF to Images, PDF to Text, Merge | Online Clipboard</title>
+<meta name="description" content="Free browser-based PDF tools: convert images to a PDF, turn PDF pages into images, extract text from a PDF, and merge multiple PDFs into one. Everything runs on your device — no uploads.">
+<link rel="canonical" href="https://bestonlineclipboard.com/tool-pdf.html"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8440166327365432" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="index.html"><div class="logo-icon">📋</div><div class="logo-text">clip<span>board</span></div></a>
+    <div class="header-right">
+      <a class="back-link" href="tools.html" style="margin:0">← All tools</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </header>
+
+  <h1>PDF <em>Toolkit</em></h1>
+  <p class="lede">Images to PDF, PDF to images, extract text, and merge PDFs — all in your browser. Files are never uploaded.</p>
+
+  <div class="card">
+    <div class="pill-tabs">
+      <button class="pill active" data-mode="img2pdf" onclick="setMode(this)">Images → PDF</button>
+      <button class="pill" data-mode="pdf2img" onclick="setMode(this)">PDF → Images</button>
+      <button class="pill" data-mode="pdf2txt" onclick="setMode(this)">PDF → Text</button>
+      <button class="pill" data-mode="merge" onclick="setMode(this)">Merge PDFs</button>
+    </div>
+
+    <div class="dropzone" id="drop" onclick="document.getElementById('file').click()">
+      <p id="dropLabel">Drop images here or <span>click to browse</span></p>
+      <p style="font-size:12px;margin-top:4px;" id="dropHint">JPG, PNG, WebP — multiple allowed</p>
+      <input type="file" id="file" accept="image/*" multiple>
+    </div>
+    <div class="filelist" id="filelist"></div>
+
+    <button class="btn" id="go" onclick="run()">Run</button>
+    <div class="progress" id="prog"><div id="progbar"></div></div>
+
+    <div class="result" id="result">
+      <div id="out"></div>
+      <div class="meta" id="meta"></div>
+    </div>
+    <div class="note" id="note">💡 Tip: for “Images → PDF” you can add several images and they become pages in order.</div>
+  </div>
+
+  <footer>
+    &copy; 2026 Online Clipboard &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="tools.html">Tools</a> &nbsp;|&nbsp; <a href="blog.html">Blog</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  const savedTheme = localStorage.getItem('clipTheme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  function toggleTheme(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';localStorage.setItem('clipTheme',d?'light':'dark');}
+  function toast(m,t){const el=document.getElementById('toast');el.textContent=m;el.className='toast show'+(t?' '+t:'');setTimeout(()=>el.className='toast',3000);}
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  let mode='img2pdf', files=[];
+  const cfg={
+    img2pdf:{accept:'image/*',multiple:true,label:'Drop images here or <span>click to browse</span>',hint:'JPG, PNG, WebP — multiple allowed'},
+    pdf2img:{accept:'application/pdf',multiple:false,label:'Drop a PDF here or <span>click to browse</span>',hint:'One PDF — each page becomes a PNG'},
+    pdf2txt:{accept:'application/pdf',multiple:false,label:'Drop a PDF here or <span>click to browse</span>',hint:'One PDF — extracts selectable text'},
+    merge:{accept:'application/pdf',multiple:true,label:'Drop PDFs here or <span>click to browse</span>',hint:'Two or more PDFs, merged in order'}
+  };
+  function setMode(el){
+    document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+    el.classList.add('active'); mode=el.dataset.mode; files=[];
+    const f=document.getElementById('file'); f.accept=cfg[mode].accept; f.multiple=cfg[mode].multiple; f.value='';
+    document.getElementById('dropLabel').innerHTML=cfg[mode].label;
+    document.getElementById('dropHint').textContent=cfg[mode].hint;
+    document.getElementById('go').textContent = {img2pdf:'📄 Create PDF',pdf2img:'🖼️ Convert to images',pdf2txt:'📝 Extract text',merge:'🔗 Merge PDFs'}[mode];
+    document.getElementById('filelist').innerHTML='';
+    document.getElementById('result').classList.remove('show');
+  }
+  const drop=document.getElementById('drop'), fileIn=document.getElementById('file');
+  fileIn.addEventListener('change', e=>addFiles(e.target.files));
+  drop.addEventListener('dragover', e=>{e.preventDefault();drop.classList.add('drag');});
+  drop.addEventListener('dragleave', ()=>drop.classList.remove('drag'));
+  drop.addEventListener('drop', e=>{e.preventDefault();drop.classList.remove('drag');addFiles(e.dataTransfer.files);});
+  function addFiles(list){
+    const arr=[...list]; files = cfg[mode].multiple ? files.concat(arr) : arr.slice(0,1);
+    renderList();
+  }
+  function renderList(){
+    document.getElementById('filelist').innerHTML=files.map((f,i)=>`<div class="fileitem"><span class="nm">${f.name}</span><button class="rm" onclick="rm(${i})">✕</button></div>`).join('');
+  }
+  function rm(i){ files.splice(i,1); renderList(); }
+  function setProg(p){const el=document.getElementById('prog');el.classList.add('show');document.getElementById('progbar').style.width=Math.round(p*100)+'%';}
+  function hideProg(){document.getElementById('prog').classList.remove('show');document.getElementById('progbar').style.width='0';}
+
+  async function run(){
+    if(!files.length){ toast('Add a file first','error'); return; }
+    const out=document.getElementById('out'), meta=document.getElementById('meta');
+    out.innerHTML=''; meta.textContent=''; document.getElementById('result').classList.remove('show');
+    const go=document.getElementById('go'); go.disabled=true; const label=go.textContent; go.innerHTML='<span class="spinner"></span> Working…';
+    try{
+      if(mode==='img2pdf') await imagesToPdf(out,meta);
+      else if(mode==='pdf2img') await pdfToImages(out,meta);
+      else if(mode==='pdf2txt') await pdfToText(out,meta);
+      else if(mode==='merge') await mergePdfs(out,meta);
+      document.getElementById('result').classList.add('show');
+      toast('Done!','success');
+    }catch(err){ console.error(err); toast('Something went wrong: '+err.message,'error'); }
+    hideProg(); go.disabled=false; go.textContent=label;
+  }
+
+  async function fileToEmbeddable(pdf,file){
+    const t=file.type;
+    if(t==='image/png') return pdf.embedPng(await file.arrayBuffer());
+    if(t==='image/jpeg') return pdf.embedJpg(await file.arrayBuffer());
+    // webp/gif/bmp → repaint to PNG via canvas
+    const url=URL.createObjectURL(file);
+    const im=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url;});
+    const c=document.createElement('canvas'); c.width=im.naturalWidth; c.height=im.naturalHeight;
+    c.getContext('2d').drawImage(im,0,0);
+    const png=await new Promise(r=>c.toBlob(r,'image/png'));
+    return pdf.embedPng(await png.arrayBuffer());
+  }
+  async function imagesToPdf(out,meta){
+    const {PDFDocument}=PDFLib; const pdf=await PDFDocument.create();
+    for(let i=0;i<files.length;i++){ setProg(i/files.length);
+      const img=await fileToEmbeddable(pdf,files[i]);
+      const page=pdf.addPage([img.width,img.height]);
+      page.drawImage(img,{x:0,y:0,width:img.width,height:img.height});
+    }
+    const bytes=await pdf.save();
+    const blob=new Blob([bytes],{type:'application/pdf'});
+    const a=document.createElement('a'); a.className='btn'; a.href=URL.createObjectURL(blob); a.download='images.pdf'; a.textContent='⬇ Download PDF';
+    out.appendChild(a); meta.innerHTML=`<b>${files.length}</b> page(s) · ${(blob.size/1024).toFixed(1)} KB`;
+  }
+  async function mergePdfs(out,meta){
+    const {PDFDocument}=PDFLib; const merged=await PDFDocument.create();
+    for(let i=0;i<files.length;i++){ setProg(i/files.length);
+      const src=await PDFDocument.load(await files[i].arrayBuffer());
+      const pages=await merged.copyPages(src,src.getPageIndices());
+      pages.forEach(p=>merged.addPage(p));
+    }
+    const bytes=await merged.save(); const blob=new Blob([bytes],{type:'application/pdf'});
+    const a=document.createElement('a'); a.className='btn'; a.href=URL.createObjectURL(blob); a.download='merged.pdf'; a.textContent='⬇ Download merged PDF';
+    out.appendChild(a); meta.innerHTML=`Merged <b>${files.length}</b> PDF(s) · ${(blob.size/1024).toFixed(1)} KB`;
+  }
+  async function pdfToImages(out,meta){
+    const pdf=await pdfjsLib.getDocument({data:await files[0].arrayBuffer()}).promise;
+    const grid=document.createElement('div'); grid.style.cssText='display:grid;grid-template-columns:repeat(2,1fr);gap:10px';
+    for(let i=1;i<=pdf.numPages;i++){ setProg(i/pdf.numPages);
+      const page=await pdf.getPage(i); const vp=page.getViewport({scale:2});
+      const c=document.createElement('canvas'); c.width=vp.width; c.height=vp.height;
+      await page.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+      const blob=await new Promise(r=>c.toBlob(r,'image/png'));
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='page-'+i+'.png';
+      const th=document.createElement('img'); th.src=a.href; th.style.cssText='max-width:100%;border-radius:8px;border:1px solid var(--border)';
+      a.appendChild(th); const wrap=document.createElement('div'); wrap.appendChild(a);
+      const cap=document.createElement('div'); cap.className='meta'; cap.style.marginTop='4px'; cap.textContent='Page '+i+' — click to save';
+      wrap.appendChild(cap); grid.appendChild(wrap);
+    }
+    out.appendChild(grid); meta.innerHTML=`<b>${pdf.numPages}</b> page(s) rendered — click any to download`;
+  }
+  async function pdfToText(out,meta){
+    const pdf=await pdfjsLib.getDocument({data:await files[0].arrayBuffer()}).promise;
+    let text='';
+    for(let i=1;i<=pdf.numPages;i++){ setProg(i/pdf.numPages);
+      const page=await pdf.getPage(i); const c=await page.getTextContent();
+      text+=c.items.map(it=>it.str).join(' ')+'\n\n';
+    }
+    const ta=document.createElement('textarea'); ta.value=text.trim(); ta.readOnly=true; ta.style.minHeight='240px';
+    out.appendChild(ta);
+    const blob=new Blob([text],{type:'text/plain'});
+    const a=document.createElement('a'); a.className='btn'; a.style.marginTop='12px'; a.href=URL.createObjectURL(blob); a.download='extracted.txt'; a.textContent='⬇ Download .txt';
+    out.appendChild(a); meta.innerHTML=`Extracted text from <b>${pdf.numPages}</b> page(s)`;
+  }
+</script>
+</body>
+</html>

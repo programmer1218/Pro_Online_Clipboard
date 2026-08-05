@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Online Tools — Image, PDF, Spreadsheet, Document & Video Converters | Online Clipboard</title>
+<meta name="description" content="A free suite of privacy-first browser tools: convert and compress images, convert CSV/Excel/JSON, PDF toolkit, Word document converter, and a video converter. Everything runs on your device — nothing is uploaded.">
+<link rel="canonical" href="https://bestonlineclipboard.com/tools.html"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8440166327365432" crossorigin="anonymous"></script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="tools.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="index.html"><div class="logo-icon">📋</div><div class="logo-text">clip<span>board</span></div></a>
+    <div class="header-right">
+      <a class="back-link" href="index.html" style="margin:0">← Clipboard</a>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </header>
+
+  <h1>Free Online <em>Tools</em></h1>
+  <p class="lede">A small suite of privacy-first utilities that run entirely in your browser — your files are never uploaded to a server.</p>
+
+  <div class="tool-grid">
+    <a class="tool-card" href="index.html"><div class="ic">📋</div><h3>Online Clipboard</h3><p>Send text, images and files between devices with a 6-digit code, QR, or live P2P.</p></a>
+    <a class="tool-card" href="tool-image.html"><div class="ic">🖼️</div><h3>Image Converter &amp; Compressor</h3><p>JPG ↔ PNG ↔ WebP, compress, and resize — no upload.</p></a>
+    <a class="tool-card" href="tool-data.html"><div class="ic">📊</div><h3>CSV ↔ Excel ↔ JSON</h3><p>Convert spreadsheets between CSV, XLSX and JSON. Reads XLSB &amp; XLS.</p></a>
+    <a class="tool-card" href="tool-pdf.html"><div class="ic">📄</div><h3>PDF Toolkit</h3><p>Images to PDF, PDF to images, extract text, and merge PDFs.</p></a>
+    <a class="tool-card" href="tool-docx.html"><div class="ic">📝</div><h3>Document Converter</h3><p>Word (.docx) &amp; text to plain text, HTML or PDF.</p></a>
+    <a class="tool-card" href="tool-video.html"><div class="ic">🎬</div><h3>Video Converter &amp; Compressor</h3><p>MP4 ↔ WebM ↔ GIF, compress and resize short clips in-browser.</p></a>
+  </div>
+
+  <div class="card" style="margin-top:24px">
+    <div class="card-title">Why these tools are different</div>
+    <p style="color:var(--muted);font-size:15px;line-height:1.7">Most online converters upload your file to a server, process it there, and send it back — which means a stranger's computer briefly holds your document, photo, or video. Every tool here works the opposite way: the conversion happens inside your own browser using JavaScript and WebAssembly, so your file never leaves your device. That makes them faster for small files, private by design, and usable even on flaky connections. The trade-off is that very large files are limited by your device's memory rather than a powerful server, so for multi-gigabyte jobs a desktop application is still the better choice.</p>
+  </div>
+
+  <footer>
+    &copy; 2026 Online Clipboard &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="blog.html">Blog</a> &nbsp;|&nbsp; <a href="about.html">About</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+  const savedTheme = localStorage.getItem('clipTheme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  function toggleTheme(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';localStorage.setItem('clipTheme',d?'light':'dark');}
+</script>
+</body>
+</html>
